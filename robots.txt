@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nicholascharris.com/sitemap.xml

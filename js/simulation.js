@@ -84,8 +84,8 @@ function drawField() {
                 totalField += dipole.getFieldAt(x, y, time);
             }
 
-            // Map field to grayscale with high contrast
-            const normalized = Math.max(-1, Math.min(1, totalField * 2.0));
+            // Map field to grayscale with very high contrast
+            const normalized = Math.max(-1, Math.min(1, totalField * 4.0));
             const brightness = Math.floor(((normalized + 1) / 2) * 255);
 
             // Fill block of pixels
@@ -135,8 +135,7 @@ function animate() {
     // Draw field
     drawField();
 
-    // Draw dipole sources on top
-    drawDipoles();
+    // Don't draw dipole markers - just show the field
 
     time += 0.5;
     animationId = requestAnimationFrame(animate);

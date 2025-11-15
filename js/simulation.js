@@ -84,8 +84,8 @@ function drawField() {
                 totalField += dipole.getFieldAt(x, y, time);
             }
 
-            // Map field to grayscale (with some contrast)
-            const normalized = Math.max(-1, Math.min(1, totalField * 0.5));
+            // Map field to grayscale with high contrast
+            const normalized = Math.max(-1, Math.min(1, totalField * 2.0));
             const brightness = Math.floor(((normalized + 1) / 2) * 255);
 
             // Fill block of pixels
@@ -109,9 +109,9 @@ function drawField() {
 }
 
 function drawDipoles() {
-    ctx.strokeStyle = '#ff0000';
-    ctx.fillStyle = '#ff0000';
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'rgba(10, 10, 10, 0.4)';
+    ctx.fillStyle = 'rgba(10, 10, 10, 0.4)';
+    ctx.lineWidth = 1.5;
 
     for (let dipole of dipoles) {
         // Draw dipole as vertical line segment

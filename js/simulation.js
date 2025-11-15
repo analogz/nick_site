@@ -1,20 +1,52 @@
-// Photonic Waveguide Coupling Simulation
-// Demonstrates evanescent coupling between parallel integrated waveguides
+// Dipole Radiation Simulation
+// Electromagnetic radiation from an oscillating electric dipole
 
 const canvas = document.getElementById('physics-canvas');
 const ctx = canvas.getContext('2d');
 
 let width, height;
 let animationId;
-
-// Simulation parameters
-let separation = 3; // Waveguide separation (coupling strength inversely related)
-const waveSpeed = 2;
-const couplingLength = 150; // Distance for complete power transfer
 let time = 0;
+
+// Dipole parameters
+const dipoles = [];
+
+class Dipole {
+    constructor(x, y, frequency = 0.05, amplitude = 1.0) {
+        this.x = x;
+        this.y = y;
+        this.frequency = frequency;
+        this.amplitude = amplitude;
+    }
+
+    // Calculate electric field at point (x, y) at time t
+    getFieldAt(x, y, t) {
+        const dx = x - this.x;
+        const dy = y - this.y;
+        const r = Math.sqrt(dx * dx + dy * dy);
+
+        if (r < 1) return 0;
+
+        // Dipole radiation: oscillating source with 1/r falloff
+        const wavelength = 80;
+        const k = (2 * Math.PI) / wavelength;
+        const omega = this.frequency;
+
+        // Radiation field (1/r falloff)
+        const amplitude = this.amplitude / r;
+
+        // Dipole oriented vertically - radiation pattern has nulls along dipole axis
+        const theta = Math.atan2(dy, dx);
+        const pattern = Math.abs(Math.sin(theta)); // Dipole pattern: zero along axis
+
+        // Oscillating field
+        return amplitude * pattern * Math.sin(k * r - omega * t);
+    }
+}
 
 function initSimulation() {
     resizeCanvas();
+    createInitialDipoles();
     animate();
 }
 
@@ -32,166 +64,110 @@ function resizeCanvas() {
     canvas.style.height = height + 'px';
 }
 
-function drawWaveguides(ctx) {
-    const waveguideWidth = 4;
-    const centerY = height / 2;
-    const spacing = separation * 8; // Visual spacing
-
-    ctx.strokeStyle = 'rgba(10, 10, 10, 0.3)';
-    ctx.lineWidth = waveguideWidth;
-
-    // Top waveguide
-    ctx.beginPath();
-    ctx.moveTo(0, centerY - spacing);
-    ctx.lineTo(width, centerY - spacing);
-    ctx.stroke();
-
-    // Bottom waveguide
-    ctx.beginPath();
-    ctx.moveTo(0, centerY + spacing);
-    ctx.lineTo(width, centerY + spacing);
-    ctx.stroke();
+function createInitialDipoles() {
+    dipoles.length = 0;
+    dipoles.push(new Dipole(width / 2, height / 2, 0.05, 1.0));
 }
 
-function calculateCoupling(x, t) {
-    // Coupled mode theory: power oscillates between waveguides
-    const kappa = Math.PI / (2 * couplingLength); // Coupling coefficient
-    const beta = 2 * Math.PI / 100; // Propagation constant
-
-    // Phase evolution
-    const z = x - waveSpeed * t;
-    const phase = beta * z;
-
-    // Coupling between waveguides
-    const couplingStrength = kappa / Math.sqrt(1 + (separation / 3) ** 4);
-
-    // Power in each waveguide (coupled mode equations solution)
-    const power1 = Math.cos(couplingStrength * x) ** 2;
-    const power2 = Math.sin(couplingStrength * x) ** 2;
-
-    // Field amplitude (with propagation)
-    const envelope = Math.exp(-((z % 400 - 200) ** 2) / 5000); // Gaussian pulse
-
-    return {
-        field1: Math.sqrt(power1) * Math.cos(phase) * envelope,
-        field2: Math.sqrt(power2) * Math.cos(phase) * envelope,
-        power1: power1 * envelope,
-        power2: power2 * envelope
-    };
-}
-
-function drawField(ctx) {
-    const centerY = height / 2;
-    const spacing = separation * 8;
-    const fieldWidth = 20;
-
+function drawField() {
     const imageData = ctx.createImageData(width, height);
     const data = imageData.data;
 
-    for (let x = 0; x < width; x++) {
-        const coupling = calculateCoupling(x, time);
+    // Sample at lower resolution for performance
+    const step = 2;
 
-        for (let y = 0; y < height; y++) {
-            const dy1 = Math.abs(y - (centerY - spacing));
-            const dy2 = Math.abs(y - (centerY + spacing));
-
-            // Field amplitude in each waveguide region
-            let field = 0;
-            if (dy1 < fieldWidth) {
-                const decay = Math.exp(-(dy1 ** 2) / 100);
-                field += coupling.field1 * decay;
-            }
-            if (dy2 < fieldWidth) {
-                const decay = Math.exp(-(dy2 ** 2) / 100);
-                field += coupling.field2 * decay;
+    for (let y = 0; y < height; y += step) {
+        for (let x = 0; x < width; x += step) {
+            // Sum fields from all dipoles
+            let totalField = 0;
+            for (let dipole of dipoles) {
+                totalField += dipole.getFieldAt(x, y, time);
             }
 
-            // Convert field to color (blue-white-red for electric field)
-            const idx = (y * width + x) * 4;
-            const intensity = Math.max(0, Math.min(1, (field + 1) / 2));
+            // Map field to grayscale (with some contrast)
+            const normalized = Math.max(-1, Math.min(1, totalField * 0.5));
+            const brightness = Math.floor(((normalized + 1) / 2) * 255);
 
-            if (field > 0) {
-                // Positive field: white to red
-                data[idx] = 10 + Math.floor(intensity * 245);
-                data[idx + 1] = 10 + Math.floor(intensity * 100);
-                data[idx + 2] = 10 + Math.floor(intensity * 100);
-            } else {
-                // Negative field: white to blue
-                data[idx] = 10 + Math.floor((1 - intensity) * 100);
-                data[idx + 1] = 10 + Math.floor((1 - intensity) * 150);
-                data[idx + 2] = 10 + Math.floor((1 - intensity) * 245);
+            // Fill block of pixels
+            for (let dy = 0; dy < step; dy++) {
+                for (let dx = 0; dx < step; dx++) {
+                    const px = x + dx;
+                    const py = y + dy;
+                    if (px < width && py < height) {
+                        const idx = (py * width + px) * 4;
+                        data[idx] = brightness;
+                        data[idx + 1] = brightness;
+                        data[idx + 2] = brightness;
+                        data[idx + 3] = 255;
+                    }
+                }
             }
-            data[idx + 3] = 255;
         }
     }
 
     ctx.putImageData(imageData, 0, 0);
 }
 
-function drawPowerIndicators(ctx) {
-    const centerY = height / 2;
-    const spacing = separation * 8;
-    const indicatorX = width - 80;
+function drawDipoles() {
+    ctx.strokeStyle = '#ff0000';
+    ctx.fillStyle = '#ff0000';
+    ctx.lineWidth = 2;
 
-    // Sample power at indicator position
-    const coupling = calculateCoupling(indicatorX, time);
+    for (let dipole of dipoles) {
+        // Draw dipole as vertical line segment
+        const dipoleLength = 12;
+        ctx.beginPath();
+        ctx.moveTo(dipole.x, dipole.y - dipoleLength / 2);
+        ctx.lineTo(dipole.x, dipole.y + dipoleLength / 2);
+        ctx.stroke();
 
-    // Top waveguide power bar
-    const barWidth = 60;
-    const barHeight = 8;
-    const power1Width = barWidth * coupling.power1;
-    const power2Width = barWidth * coupling.power2;
-
-    ctx.fillStyle = 'rgba(200, 50, 50, 0.6)';
-    ctx.fillRect(indicatorX, centerY - spacing - barHeight / 2, power1Width, barHeight);
-
-    ctx.fillStyle = 'rgba(200, 50, 50, 0.6)';
-    ctx.fillRect(indicatorX, centerY + spacing - barHeight / 2, power2Width, barHeight);
-
-    // Outline
-    ctx.strokeStyle = 'rgba(10, 10, 10, 0.3)';
-    ctx.lineWidth = 1;
-    ctx.strokeRect(indicatorX, centerY - spacing - barHeight / 2, barWidth, barHeight);
-    ctx.strokeRect(indicatorX, centerY + spacing - barHeight / 2, barWidth, barHeight);
+        // Draw end charges
+        ctx.beginPath();
+        ctx.arc(dipole.x, dipole.y - dipoleLength / 2, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(dipole.x, dipole.y + dipoleLength / 2, 3, 0, Math.PI * 2);
+        ctx.fill();
+    }
 }
 
 function animate() {
-    // Clear
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, width, height);
-
     // Draw field
-    drawField(ctx);
+    drawField();
 
-    // Draw waveguides on top
-    drawWaveguides(ctx);
+    // Draw dipole sources on top
+    drawDipoles();
 
-    // Draw power indicators
-    drawPowerIndicators(ctx);
-
-    time += 0.3;
+    time += 0.5;
     animationId = requestAnimationFrame(animate);
 }
 
-// Interaction: click to adjust waveguide separation
+// Click to add dipole
 canvas.addEventListener('click', (e) => {
     const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // Map vertical position to separation (1 to 6)
-    const normalizedY = y / height;
-    separation = 1 + normalizedY * 5;
+    const frequency = 0.04 + Math.random() * 0.02;
+    dipoles.push(new Dipole(x, y, frequency, 1.0));
+
+    // Limit to 6 dipoles
+    if (dipoles.length > 6) {
+        dipoles.shift();
+    }
 });
 
 // Double-click to reset
-canvas.addEventListener('dblclick', () => {
-    separation = 3;
+canvas.addEventListener('dblclick', (e) => {
+    e.preventDefault();
+    createInitialDipoles();
     time = 0;
 });
 
-// Handle window resize
+// Handle resize
 window.addEventListener('resize', () => {
     resizeCanvas();
+    createInitialDipoles();
 });
 
 // Initialize

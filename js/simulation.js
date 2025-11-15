@@ -84,9 +84,9 @@ function drawField() {
                 totalField += dipole.getFieldAt(x, y, time);
             }
 
-            // Map field to grayscale with very high contrast
-            const normalized = Math.max(-1, Math.min(1, totalField * 4.0));
-            const brightness = Math.floor(((normalized + 1) / 2) * 255);
+            // Map field to grayscale: white background, dark wavefronts
+            const normalized = Math.max(-1, Math.min(1, totalField * 5.0));
+            const brightness = Math.floor(255 - Math.abs(normalized) * 200);
 
             // Fill block of pixels
             for (let dy = 0; dy < step; dy++) {

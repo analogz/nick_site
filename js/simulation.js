@@ -1,173 +1,198 @@
-// Wave Interference Pattern - Photonics Inspired
-// Multiple wave sources creating constructive and destructive interference
+// Photonic Waveguide Coupling Simulation
+// Demonstrates evanescent coupling between parallel integrated waveguides
 
-class WaveSource {
-    constructor(x, y, frequency, amplitude, phase = 0) {
-        this.x = x;
-        this.y = y;
-        this.frequency = frequency;
-        this.amplitude = amplitude;
-        this.phase = phase;
-    }
+const canvas = document.getElementById('physics-canvas');
+const ctx = canvas.getContext('2d');
 
-    // Calculate wave amplitude at a given point and time
-    getAmplitudeAt(x, y, time) {
-        const dx = x - this.x;
-        const dy = y - this.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+let width, height;
+let animationId;
 
-        // Wave equation: A * sin(k*r - ω*t + φ)
-        // k = wave number, r = distance, ω = angular frequency, φ = phase
-        const wavelength = 40; // pixels
-        const k = (2 * Math.PI) / wavelength;
-        const omega = this.frequency;
+// Simulation parameters
+let separation = 3; // Waveguide separation (coupling strength inversely related)
+const waveSpeed = 2;
+const couplingLength = 150; // Distance for complete power transfer
+let time = 0;
 
-        // Amplitude decreases with distance (realistic wave propagation)
-        const attenuation = Math.max(0, 1 - distance / 400);
-
-        return this.amplitude * attenuation * Math.sin(k * distance - omega * time + this.phase);
-    }
+function initSimulation() {
+    resizeCanvas();
+    animate();
 }
 
-class WaveInterferenceSimulation {
-    constructor(canvasId) {
-        this.canvas = document.getElementById(canvasId);
-        if (!this.canvas) return;
+function resizeCanvas() {
+    const container = canvas.parentElement;
+    const rect = container.getBoundingClientRect();
 
-        this.ctx = this.canvas.getContext('2d');
-        this.sources = [];
-        this.time = 0;
-        this.resolution = 3; // Grid resolution (lower = better quality, slower)
-        this.showSources = true;
+    // 16:9 aspect ratio
+    width = rect.width;
+    height = width * 9 / 16;
 
-        this.setupCanvas();
-        this.createInitialSources();
-        this.setupEventListeners();
-        this.animate();
-    }
-
-    setupCanvas() {
-        const updateSize = () => {
-            const rect = this.canvas.getBoundingClientRect();
-            this.canvas.width = rect.width;
-            this.canvas.height = rect.height;
-        };
-        updateSize();
-        window.addEventListener('resize', () => {
-            updateSize();
-            this.createInitialSources();
-        });
-    }
-
-    createInitialSources() {
-        this.sources = [];
-        const w = this.canvas.width;
-        const h = this.canvas.height;
-
-        // Create multiple wave sources in interesting positions
-        this.sources.push(new WaveSource(w * 0.3, h * 0.5, 0.05, 1.0));
-        this.sources.push(new WaveSource(w * 0.7, h * 0.5, 0.05, 1.0));
-        this.sources.push(new WaveSource(w * 0.5, h * 0.3, 0.05, 0.8, Math.PI / 2));
-    }
-
-    setupEventListeners() {
-        this.canvas.addEventListener('click', (e) => {
-            const rect = this.canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            // Add a new wave source
-            const frequency = 0.04 + Math.random() * 0.02;
-            const amplitude = 0.8 + Math.random() * 0.4;
-            const phase = Math.random() * Math.PI * 2;
-
-            this.sources.push(new WaveSource(x, y, frequency, amplitude, phase));
-
-            // Limit number of sources
-            if (this.sources.length > 8) {
-                this.sources.shift();
-            }
-        });
-
-        this.canvas.addEventListener('dblclick', (e) => {
-            e.preventDefault();
-            // Reset to initial sources
-            this.createInitialSources();
-        });
-    }
-
-    calculateInterference(x, y) {
-        let totalAmplitude = 0;
-
-        // Sum all wave amplitudes at this point (superposition principle)
-        for (let source of this.sources) {
-            totalAmplitude += source.getAmplitudeAt(x, y, this.time);
-        }
-
-        return totalAmplitude;
-    }
-
-    draw() {
-        const imageData = this.ctx.createImageData(this.canvas.width, this.canvas.height);
-        const data = imageData.data;
-
-        // Calculate interference pattern
-        for (let y = 0; y < this.canvas.height; y += this.resolution) {
-            for (let x = 0; x < this.canvas.width; x += this.resolution) {
-                const amplitude = this.calculateInterference(x, y);
-
-                // Map amplitude to grayscale
-                // Normalize amplitude (typically ranges from -N to +N where N is number of sources)
-                const normalized = (amplitude / this.sources.length + 1) / 2; // 0 to 1
-                const brightness = Math.floor(normalized * 255);
-
-                // Fill a block of pixels for the resolution
-                for (let dy = 0; dy < this.resolution; dy++) {
-                    for (let dx = 0; dx < this.resolution; dx++) {
-                        const px = x + dx;
-                        const py = y + dy;
-                        if (px < this.canvas.width && py < this.canvas.height) {
-                            const index = (py * this.canvas.width + px) * 4;
-                            data[index] = brightness;     // R
-                            data[index + 1] = brightness; // G
-                            data[index + 2] = brightness; // B
-                            data[index + 3] = 255;        // A
-                        }
-                    }
-                }
-            }
-        }
-
-        this.ctx.putImageData(imageData, 0, 0);
-
-        // Draw wave sources
-        if (this.showSources) {
-            for (let source of this.sources) {
-                // Draw a subtle circle at source location
-                this.ctx.strokeStyle = '#0a0a0a';
-                this.ctx.lineWidth = 1.5;
-                this.ctx.beginPath();
-                this.ctx.arc(source.x, source.y, 4, 0, Math.PI * 2);
-                this.ctx.stroke();
-
-                // Draw smaller filled circle
-                this.ctx.fillStyle = '#0a0a0a';
-                this.ctx.beginPath();
-                this.ctx.arc(source.x, source.y, 2, 0, Math.PI * 2);
-                this.ctx.fill();
-            }
-        }
-    }
-
-    animate() {
-        this.draw();
-        this.time += 0.5; // Time step
-
-        requestAnimationFrame(() => this.animate());
-    }
+    canvas.width = width;
+    canvas.height = height;
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
 }
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    new WaveInterferenceSimulation('physics-canvas');
+function drawWaveguides(ctx) {
+    const waveguideWidth = 4;
+    const centerY = height / 2;
+    const spacing = separation * 8; // Visual spacing
+
+    ctx.strokeStyle = 'rgba(10, 10, 10, 0.3)';
+    ctx.lineWidth = waveguideWidth;
+
+    // Top waveguide
+    ctx.beginPath();
+    ctx.moveTo(0, centerY - spacing);
+    ctx.lineTo(width, centerY - spacing);
+    ctx.stroke();
+
+    // Bottom waveguide
+    ctx.beginPath();
+    ctx.moveTo(0, centerY + spacing);
+    ctx.lineTo(width, centerY + spacing);
+    ctx.stroke();
+}
+
+function calculateCoupling(x, t) {
+    // Coupled mode theory: power oscillates between waveguides
+    const kappa = Math.PI / (2 * couplingLength); // Coupling coefficient
+    const beta = 2 * Math.PI / 100; // Propagation constant
+
+    // Phase evolution
+    const z = x - waveSpeed * t;
+    const phase = beta * z;
+
+    // Coupling between waveguides
+    const couplingStrength = kappa / Math.sqrt(1 + (separation / 3) ** 4);
+
+    // Power in each waveguide (coupled mode equations solution)
+    const power1 = Math.cos(couplingStrength * x) ** 2;
+    const power2 = Math.sin(couplingStrength * x) ** 2;
+
+    // Field amplitude (with propagation)
+    const envelope = Math.exp(-((z % 400 - 200) ** 2) / 5000); // Gaussian pulse
+
+    return {
+        field1: Math.sqrt(power1) * Math.cos(phase) * envelope,
+        field2: Math.sqrt(power2) * Math.cos(phase) * envelope,
+        power1: power1 * envelope,
+        power2: power2 * envelope
+    };
+}
+
+function drawField(ctx) {
+    const centerY = height / 2;
+    const spacing = separation * 8;
+    const fieldWidth = 20;
+
+    const imageData = ctx.createImageData(width, height);
+    const data = imageData.data;
+
+    for (let x = 0; x < width; x++) {
+        const coupling = calculateCoupling(x, time);
+
+        for (let y = 0; y < height; y++) {
+            const dy1 = Math.abs(y - (centerY - spacing));
+            const dy2 = Math.abs(y - (centerY + spacing));
+
+            // Field amplitude in each waveguide region
+            let field = 0;
+            if (dy1 < fieldWidth) {
+                const decay = Math.exp(-(dy1 ** 2) / 100);
+                field += coupling.field1 * decay;
+            }
+            if (dy2 < fieldWidth) {
+                const decay = Math.exp(-(dy2 ** 2) / 100);
+                field += coupling.field2 * decay;
+            }
+
+            // Convert field to color (blue-white-red for electric field)
+            const idx = (y * width + x) * 4;
+            const intensity = Math.max(0, Math.min(1, (field + 1) / 2));
+
+            if (field > 0) {
+                // Positive field: white to red
+                data[idx] = 10 + Math.floor(intensity * 245);
+                data[idx + 1] = 10 + Math.floor(intensity * 100);
+                data[idx + 2] = 10 + Math.floor(intensity * 100);
+            } else {
+                // Negative field: white to blue
+                data[idx] = 10 + Math.floor((1 - intensity) * 100);
+                data[idx + 1] = 10 + Math.floor((1 - intensity) * 150);
+                data[idx + 2] = 10 + Math.floor((1 - intensity) * 245);
+            }
+            data[idx + 3] = 255;
+        }
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+}
+
+function drawPowerIndicators(ctx) {
+    const centerY = height / 2;
+    const spacing = separation * 8;
+    const indicatorX = width - 80;
+
+    // Sample power at indicator position
+    const coupling = calculateCoupling(indicatorX, time);
+
+    // Top waveguide power bar
+    const barWidth = 60;
+    const barHeight = 8;
+    const power1Width = barWidth * coupling.power1;
+    const power2Width = barWidth * coupling.power2;
+
+    ctx.fillStyle = 'rgba(200, 50, 50, 0.6)';
+    ctx.fillRect(indicatorX, centerY - spacing - barHeight / 2, power1Width, barHeight);
+
+    ctx.fillStyle = 'rgba(200, 50, 50, 0.6)';
+    ctx.fillRect(indicatorX, centerY + spacing - barHeight / 2, power2Width, barHeight);
+
+    // Outline
+    ctx.strokeStyle = 'rgba(10, 10, 10, 0.3)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(indicatorX, centerY - spacing - barHeight / 2, barWidth, barHeight);
+    ctx.strokeRect(indicatorX, centerY + spacing - barHeight / 2, barWidth, barHeight);
+}
+
+function animate() {
+    // Clear
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, width, height);
+
+    // Draw field
+    drawField(ctx);
+
+    // Draw waveguides on top
+    drawWaveguides(ctx);
+
+    // Draw power indicators
+    drawPowerIndicators(ctx);
+
+    time += 0.3;
+    animationId = requestAnimationFrame(animate);
+}
+
+// Interaction: click to adjust waveguide separation
+canvas.addEventListener('click', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const y = e.clientY - rect.top;
+
+    // Map vertical position to separation (1 to 6)
+    const normalizedY = y / height;
+    separation = 1 + normalizedY * 5;
 });
+
+// Double-click to reset
+canvas.addEventListener('dblclick', () => {
+    separation = 3;
+    time = 0;
+});
+
+// Handle window resize
+window.addEventListener('resize', () => {
+    resizeCanvas();
+});
+
+// Initialize
+initSimulation();

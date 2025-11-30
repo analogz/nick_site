@@ -456,7 +456,9 @@ p {
     margin: 0;
 }
 
-.video-tag {
+.video-tag,
+.youtube-tag,
+.podcast-tag {
     font-size: 0.625rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;

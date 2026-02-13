@@ -140,8 +140,8 @@
         <footer>
             <p>&copy; 2025 Nicholas Harris</p>
             <div class="footer-links">
-                <a href="https://x.com/theanalognick" target="_blank">X</a>
-                <a href="https://www.linkedin.com/in/nicholas-harris-7114b233/" target="_blank">LinkedIn</a>
+                <a href="https://x.com/theanalognick" target="_blank" rel="me">X</a>
+                <a href="https://www.linkedin.com/in/nicholas-harris-7114b233/" target="_blank" rel="me">LinkedIn</a>
             </div>
         </footer>
     </main>
@@ -151,35 +151,89 @@
     {
         "@context": "https://schema.org",
         "@type": "Person",
+        "@id": "https://nicholascharris.com/#person",
         "name": "Nicholas Harris",
+        "alternateName": "Nick Harris",
         "url": "https://nicholascharris.com",
         "sameAs": [
             "https://x.com/theanalognick",
             "https://www.linkedin.com/in/nicholas-harris-7114b233/",
-            "https://scholar.google.com/citations?user=YBNCZgoAAAAJ"
+            "https://scholar.google.com/citations?user=YBNCZgoAAAAJ",
+            "https://www.crunchbase.com/person/nicholas-harris",
+            "https://www.bloomberg.com/profile/person/20966490",
+            "https://theorg.com/org/lightmatter-co/org-chart/nicholas-harris"
         ],
         "jobTitle": "Founder, President, and CEO",
         "worksFor": {
             "@type": "Organization",
-            "name": "Lightmatter"
+            "@id": "https://nicholascharris.com/#lightmatter",
+            "name": "Lightmatter",
+            "url": "https://lightmatter.co",
+            "foundingDate": "2017",
+            "description": "Photonic computing company building photonic interconnects and processors for AI infrastructure",
+            "founder": {
+                "@id": "https://nicholascharris.com/#person"
+            }
         },
         "alumniOf": [
             {
-                "@type": "Organization",
+                "@type": "CollegeOrUniversity",
                 "name": "Massachusetts Institute of Technology",
                 "sameAs": "https://www.mit.edu"
             },
             {
-                "@type": "Organization",
-                "name": "University of Idaho"
+                "@type": "CollegeOrUniversity",
+                "name": "University of Idaho",
+                "sameAs": "https://www.uidaho.edu"
             }
         ],
+        "hasCredential": [
+            {
+                "@type": "EducationalOccupationalCredential",
+                "credentialCategory": "degree",
+                "educationalLevel": "Doctoral",
+                "name": "PhD in Electrical Engineering",
+                "recognizedBy": {
+                    "@type": "CollegeOrUniversity",
+                    "name": "Massachusetts Institute of Technology"
+                }
+            },
+            {
+                "@type": "EducationalOccupationalCredential",
+                "credentialCategory": "degree",
+                "educationalLevel": "Bachelor",
+                "name": "BSc in Electrical Engineering",
+                "recognizedBy": {
+                    "@type": "CollegeOrUniversity",
+                    "name": "University of Idaho"
+                }
+            }
+        ],
+        "knowsAbout": [
+            "Photonic computing",
+            "Silicon photonics",
+            "Quantum computing",
+            "Artificial intelligence acceleration",
+            "Integrated photonics",
+            "Nanophotonics",
+            "Optical neural networks"
+        ],
+        "birthPlace": {
+            "@type": "Place",
+            "name": "Gasquet, California, USA"
+        },
+        "image": "https://nicholascharris.com/images/nicholas-harris-headshot.jpg",
+        "nationality": {
+            "@type": "Country",
+            "name": "United States"
+        },
         "award": [
             "Optica Fellow (2026)",
             "Goldman Sachs Most Exceptional Entrepreneurs (2025)",
             "Boston Globe Tech Power Players 50 (2024)",
+            "Photonics100 (2022)",
             "MIT Technology Review 35 Innovators Under 35 (2021)",
-            "Photonics100 (2022)"
+            "National Science Foundation Graduate Research Fellowship (2012)"
         ],
         "description": "Founder and CEO of Lightmatter, pioneering photonic computing and AI acceleration. PhD from MIT in integrated photonics and quantum computing."
     }

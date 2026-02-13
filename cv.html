@@ -179,11 +179,81 @@
         <footer>
             <p>&copy; 2025 Nicholas Harris</p>
             <div class="footer-links">
-                <a href="https://x.com/theanalognick" target="_blank">X</a>
-                <a href="https://www.linkedin.com/in/nicholas-harris-7114b233/" target="_blank">LinkedIn</a>
+                <a href="https://x.com/theanalognick" target="_blank" rel="me">X</a>
+                <a href="https://www.linkedin.com/in/nicholas-harris-7114b233/" target="_blank" rel="me">LinkedIn</a>
             </div>
         </footer>
     </main>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "@id": "https://nicholascharris.com/#person",
+        "name": "Nicholas Harris",
+        "alternateName": "Nick Harris",
+        "url": "https://nicholascharris.com",
+        "jobTitle": "Founder, President, and CEO",
+        "worksFor": {
+            "@type": "Organization",
+            "name": "Lightmatter",
+            "url": "https://lightmatter.co"
+        },
+        "hasOccupation": [
+            {
+                "@type": "Role",
+                "roleName": "Founder, President, CEO",
+                "startDate": "2017-09",
+                "namedPosition": "CEO",
+                "worksFor": {
+                    "@type": "Organization",
+                    "name": "Lightmatter"
+                }
+            },
+            {
+                "@type": "Role",
+                "roleName": "Intelligence Community Postdoctoral Fellow",
+                "startDate": "2017-09",
+                "endDate": "2018-01",
+                "worksFor": {
+                    "@type": "CollegeOrUniversity",
+                    "name": "Massachusetts Institute of Technology"
+                }
+            },
+            {
+                "@type": "Role",
+                "roleName": "R&D Product Engineer",
+                "startDate": "2009-01",
+                "endDate": "2011-06",
+                "worksFor": {
+                    "@type": "Organization",
+                    "name": "Micron"
+                }
+            }
+        ],
+        "alumniOf": [
+            {
+                "@type": "CollegeOrUniversity",
+                "name": "Massachusetts Institute of Technology",
+                "sameAs": "https://www.mit.edu"
+            },
+            {
+                "@type": "CollegeOrUniversity",
+                "name": "University of Idaho",
+                "sameAs": "https://www.uidaho.edu"
+            }
+        ],
+        "award": [
+            "Optica Fellow (2026)",
+            "Goldman Sachs Most Exceptional Entrepreneurs (2025)",
+            "Boston Globe Tech Power Players 50 (2024)",
+            "Photonics100 (2022)",
+            "MIT Technology Review 35 Innovators Under 35 (2021)",
+            "National Science Foundation Graduate Research Fellowship (2012)"
+        ]
+    }
+    </script>
 
     <script src="js/script.js"></script>
 </body>

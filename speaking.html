@@ -260,11 +260,66 @@
         <footer>
             <p>&copy; 2025 Nicholas Harris</p>
             <div class="footer-links">
-                <a href="https://x.com/theanalognick" target="_blank">X</a>
-                <a href="https://www.linkedin.com/in/nicholas-harris-7114b233/" target="_blank">LinkedIn</a>
+                <a href="https://x.com/theanalognick" target="_blank" rel="me">X</a>
+                <a href="https://www.linkedin.com/in/nicholas-harris-7114b233/" target="_blank" rel="me">LinkedIn</a>
             </div>
         </footer>
     </main>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Person",
+                "@id": "https://nicholascharris.com/#person",
+                "name": "Nicholas Harris"
+            },
+            {
+                "@type": "Event",
+                "name": "SPIE Photonics West",
+                "startDate": "2026-01",
+                "performer": { "@id": "https://nicholascharris.com/#person" },
+                "description": "Photonic-enabled heterogeneous integration: the future of AI system scaling",
+                "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"
+            },
+            {
+                "@type": "Event",
+                "name": "Hot Chips",
+                "startDate": "2025-08",
+                "performer": { "@id": "https://nicholascharris.com/#person" },
+                "description": "Transforming AI infrastructure with the power of 3D photonics",
+                "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"
+            },
+            {
+                "@type": "Event",
+                "name": "AI Infra Summit",
+                "startDate": "2025-09",
+                "performer": { "@id": "https://nicholascharris.com/#person" },
+                "description": "Driving the next 1000X leap in computing with photonic AI infrastructure",
+                "url": "https://www.ai-infra-summit.com/keynote-recordings/driving-next-1000x-leap-computing-photonic-ai-infrastructure-nick-harris-founder-ceo-lightmatter",
+                "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"
+            },
+            {
+                "@type": "Event",
+                "name": "Web Summit",
+                "startDate": "2025-05",
+                "performer": { "@id": "https://nicholascharris.com/#person" },
+                "description": "How photonics meets AI's growing demands and reshapes datacenter infrastructure",
+                "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"
+            },
+            {
+                "@type": "Event",
+                "name": "Sequoia Capital AI Ascent",
+                "startDate": "2024-03",
+                "performer": { "@id": "https://nicholascharris.com/#person" },
+                "description": "What's next for datacenters and powering the next generation of AI models",
+                "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"
+            }
+        ]
+    }
+    </script>
 
     <script src="js/script.js"></script>
 </body>

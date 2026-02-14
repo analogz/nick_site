@@ -8,6 +8,10 @@ let width, height, dpr;
 let animationId;
 let time = 0;
 
+const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+let isDark = darkQuery.matches;
+darkQuery.addEventListener('change', (e) => { isDark = e.matches; });
+
 const dipoles = [];
 
 class Dipole {
@@ -85,7 +89,9 @@ function drawField() {
 
             // tanh for sharp wavefront edges, abs to show both polarities
             const sharp = Math.tanh(totalField * 3.5);
-            const brightness = Math.floor(255 - Math.abs(sharp) * 255);
+            const brightness = isDark
+                ? Math.floor(Math.abs(sharp) * 245 + 10)
+                : Math.floor(255 - Math.abs(sharp) * 255);
 
             for (let dy = 0; dy < step; dy++) {
                 for (let dx = 0; dx < step; dx++) {

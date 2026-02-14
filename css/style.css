@@ -116,8 +116,7 @@ main {
     object-position: center 20%;
     filter: grayscale(100%);
     border: 1px solid var(--color-line);
-    margin-top: 3rem;
-    align-self: flex-end;
+    margin-top: 2rem;
 }
 
 .tagline {

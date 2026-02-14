@@ -93,12 +93,12 @@ main {
     min-height: 70vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: flex-start;
     padding: 4rem 0;
     border-bottom: none;
-    background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
-                url('../images/nicholas-harris-speaking.jpg') center 20% / cover no-repeat;
+    background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.5)),
+                url('../images/nicholas-harris-speaking.jpg') center 15% / cover no-repeat;
     filter: grayscale(100%);
     margin: 0 -2rem;
     padding-left: 2rem;

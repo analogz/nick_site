@@ -109,6 +109,16 @@ main {
     color: var(--color-accent);
 }
 
+.hero-photo {
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+    object-position: center 20%;
+    border-radius: 2px;
+    margin-top: 3rem;
+    filter: grayscale(100%);
+}
+
 .tagline {
     font-size: clamp(1rem, 2.5vw, 1.5rem);
     color: var(--color-text);
@@ -788,6 +798,11 @@ footer p {
 
     .hero {
         min-height: 80vh;
+    }
+
+    .hero-photo {
+        width: 200px;
+        height: 200px;
     }
 
     .page-header {

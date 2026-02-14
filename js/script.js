@@ -1,26 +1,5 @@
-// Intersection Observer for fade-in animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in');
-            observer.unobserve(entry.target);
-        }
-    });
-}, observerOptions);
-
-// Observe all sections except hero
+// Smooth scroll for anchor links
 document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('section:not(.hero)');
-    sections.forEach(section => {
-        observer.observe(section);
-    });
-
-    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -33,24 +12,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
-    // Add cursor effect for contact links
-    const contactLinks = document.querySelectorAll('.contact-link');
-    contactLinks.forEach(link => {
-        link.addEventListener('mouseenter', function() {
-            document.body.style.cursor = 'pointer';
-        });
-        link.addEventListener('mouseleave', function() {
-            document.body.style.cursor = 'default';
-        });
-    });
 });
 
-// Optional: Add parallax effect to hero section
+// Throttled parallax fade for hero section
+let ticking = false;
 window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    if (hero && scrolled < window.innerHeight) {
-        hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
+    if (!ticking) {
+        requestAnimationFrame(() => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
+            }
+            ticking = false;
+        });
+        ticking = true;
     }
 });

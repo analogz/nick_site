@@ -51,17 +51,12 @@ function initSimulation() {
 }
 
 function resizeCanvas() {
-    const container = canvas.parentElement;
-    const rect = container.getBoundingClientRect();
-
     dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
     width = rect.width;
-    height = width * 9 / 16;
-
+    height = rect.height;
     canvas.width = width * dpr;
     canvas.height = height * dpr;
-    canvas.style.width = width + 'px';
-    canvas.style.height = height + 'px';
 }
 
 function createInitialDipoles() {

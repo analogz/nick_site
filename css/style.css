@@ -97,6 +97,12 @@ main {
     align-items: flex-start;
     padding: 4rem 0;
     border-bottom: none;
+    background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+                url('../images/nicholas-harris-speaking.jpg') center 20% / cover no-repeat;
+    filter: grayscale(100%);
+    margin: 0 -2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 
 .name {
@@ -106,7 +112,7 @@ main {
     letter-spacing: -0.05em;
     line-height: 0.9;
     margin: 0;
-    color: var(--color-accent);
+    color: #ffffff;
 }
 
 .hero-photo {
@@ -798,11 +804,9 @@ footer p {
 
     .hero {
         min-height: 80vh;
-    }
-
-    .hero-photo {
-        width: 60px;
-        height: 60px;
+        margin: 0 -1.5rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
     }
 
     .page-header {

@@ -1,14 +1,13 @@
 // Dipole Radiation Simulation
-// Electromagnetic radiation from an oscillating electric dipole
+// Electromagnetic radiation from oscillating electric dipoles
 
 const canvas = document.getElementById('physics-canvas');
 const ctx = canvas.getContext('2d');
 
-let width, height;
+let width, height, dpr;
 let animationId;
 let time = 0;
 
-// Dipole parameters
 const dipoles = [];
 
 class Dipole {
@@ -19,7 +18,6 @@ class Dipole {
         this.amplitude = amplitude;
     }
 
-    // Calculate electric field at point (x, y) at time t
     getFieldAt(x, y, t) {
         const dx = x - this.x;
         const dy = y - this.y;
@@ -27,19 +25,17 @@ class Dipole {
 
         if (r < 1) return 0;
 
-        // Dipole radiation: oscillating source with 1/r falloff
-        const wavelength = 80;
+        const wavelength = 40;
         const k = (2 * Math.PI) / wavelength;
         const omega = this.frequency;
 
-        // Radiation field (1/r falloff)
-        const amplitude = this.amplitude / r;
+        // Slower decay so outer rings stay visible
+        const amplitude = this.amplitude / Math.pow(r, 0.55);
 
-        // Dipole oriented vertically - radiation pattern has nulls along dipole axis
+        // Softened dipole pattern — minimum 20% radiation even along axis
         const theta = Math.atan2(dy, dx);
-        const pattern = Math.abs(Math.sin(theta)); // Dipole pattern: zero along axis
+        const pattern = 0.2 + 0.8 * Math.abs(Math.sin(theta));
 
-        // Oscillating field
         return amplitude * pattern * Math.sin(k * r - omega * t);
     }
 }
@@ -54,12 +50,12 @@ function resizeCanvas() {
     const container = canvas.parentElement;
     const rect = container.getBoundingClientRect();
 
-    // 16:9 aspect ratio
+    dpr = window.devicePixelRatio || 1;
     width = rect.width;
     height = width * 9 / 16;
 
-    canvas.width = width;
-    canvas.height = height;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
     canvas.style.width = width + 'px';
     canvas.style.height = height + 'px';
 }
@@ -70,31 +66,33 @@ function createInitialDipoles() {
 }
 
 function drawField() {
-    const imageData = ctx.createImageData(width, height);
+    const w = Math.ceil(width * dpr);
+    const h = Math.ceil(height * dpr);
+    const imageData = ctx.createImageData(w, h);
     const data = imageData.data;
 
-    // Sample at lower resolution for performance
     const step = 2;
 
-    for (let y = 0; y < height; y += step) {
-        for (let x = 0; x < width; x += step) {
-            // Sum fields from all dipoles
+    for (let py = 0; py < h; py += step) {
+        for (let px = 0; px < w; px += step) {
+            const x = px / dpr;
+            const y = py / dpr;
+
             let totalField = 0;
             for (let dipole of dipoles) {
                 totalField += dipole.getFieldAt(x, y, time);
             }
 
-            // Map field to grayscale: white background, dark wavefronts
-            const normalized = Math.max(-1, Math.min(1, totalField * 5.0));
-            const brightness = Math.floor(255 - Math.abs(normalized) * 200);
+            // tanh for sharp wavefront edges, abs to show both polarities
+            const sharp = Math.tanh(totalField * 3.5);
+            const brightness = Math.floor(255 - Math.abs(sharp) * 255);
 
-            // Fill block of pixels
             for (let dy = 0; dy < step; dy++) {
                 for (let dx = 0; dx < step; dx++) {
-                    const px = x + dx;
-                    const py = y + dy;
-                    if (px < width && py < height) {
-                        const idx = (py * width + px) * 4;
+                    const fx = px + dx;
+                    const fy = py + dy;
+                    if (fx < w && fy < h) {
+                        const idx = (fy * w + fx) * 4;
                         data[idx] = brightness;
                         data[idx + 1] = brightness;
                         data[idx + 2] = brightness;
@@ -108,35 +106,8 @@ function drawField() {
     ctx.putImageData(imageData, 0, 0);
 }
 
-function drawDipoles() {
-    ctx.strokeStyle = 'rgba(10, 10, 10, 0.4)';
-    ctx.fillStyle = 'rgba(10, 10, 10, 0.4)';
-    ctx.lineWidth = 1.5;
-
-    for (let dipole of dipoles) {
-        // Draw dipole as vertical line segment
-        const dipoleLength = 12;
-        ctx.beginPath();
-        ctx.moveTo(dipole.x, dipole.y - dipoleLength / 2);
-        ctx.lineTo(dipole.x, dipole.y + dipoleLength / 2);
-        ctx.stroke();
-
-        // Draw end charges
-        ctx.beginPath();
-        ctx.arc(dipole.x, dipole.y - dipoleLength / 2, 3, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(dipole.x, dipole.y + dipoleLength / 2, 3, 0, Math.PI * 2);
-        ctx.fill();
-    }
-}
-
 function animate() {
-    // Draw field
     drawField();
-
-    // Don't draw dipole markers - just show the field
-
     time += 0.5;
     animationId = requestAnimationFrame(animate);
 }
@@ -144,13 +115,12 @@ function animate() {
 // Click to add dipole
 canvas.addEventListener('click', (e) => {
     const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const x = (e.clientX - rect.left);
+    const y = (e.clientY - rect.top);
 
     const frequency = 0.04 + Math.random() * 0.02;
     dipoles.push(new Dipole(x, y, frequency, 1.0));
 
-    // Limit to 6 dipoles
     if (dipoles.length > 6) {
         dipoles.shift();
     }
@@ -169,5 +139,4 @@ window.addEventListener('resize', () => {
     createInitialDipoles();
 });
 
-// Initialize
 initSimulation();

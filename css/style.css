@@ -526,11 +526,27 @@ p {
     padding: 4rem 0;
 }
 
+.speaking-year {
+    font-size: 0.75rem;
+    color: var(--color-subtle);
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin: 4rem 0 0 0;
+    padding: 0;
+}
+
+.speaking-year:first-child {
+    margin-top: 0;
+}
+
 .speaking-entry {
-    padding: 3rem 0;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--color-line);
 }
 
 .speaking-entry:last-child {
+    border-bottom: none;
     padding-bottom: 0;
 }
 

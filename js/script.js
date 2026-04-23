@@ -1,3 +1,7 @@
+document.querySelectorAll('.copyright-year').forEach(el => {
+    el.textContent = new Date().getFullYear();
+});
+
 // Smooth scroll for anchor links
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

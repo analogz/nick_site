@@ -14,18 +14,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Throttled parallax fade for hero section
-let ticking = false;
-window.addEventListener('scroll', () => {
-    if (!ticking) {
-        requestAnimationFrame(() => {
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero');
-            if (hero && scrolled < window.innerHeight) {
-                hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
-            }
-            ticking = false;
-        });
-        ticking = true;
-    }
-});

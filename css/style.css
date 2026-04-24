@@ -478,10 +478,27 @@ p {
 
 .publication {
     padding: 3rem 0;
+    display: flex;
+    gap: 2.5rem;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--color-line);
 }
 
 .publication:last-child {
     padding-bottom: 0;
+    border-bottom: none;
+}
+
+.pub-figure {
+    width: 180px;
+    flex-shrink: 0;
+}
+
+.pub-figure img {
+    width: 100%;
+    display: block;
+    filter: grayscale(100%);
+    border: 1px solid var(--color-line);
 }
 
 .pub-content {
@@ -853,6 +870,16 @@ footer p {
 
     .publication {
         padding: 2.5rem 0;
+    }
+
+    .publication {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .pub-figure {
+        width: 100%;
+        max-width: 320px;
     }
 
     .gallery-grid {

@@ -370,10 +370,14 @@ p {
 }
 
 .scholar-link {
+    display: inline-block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
     color: var(--color-subtle);
     text-decoration: none;
+    margin-top: 1.5rem;
     transition: color 0.3s ease;
-    white-space: nowrap;
 }
 
 .scholar-link:hover {

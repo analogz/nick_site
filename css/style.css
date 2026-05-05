@@ -369,6 +369,21 @@ p {
     margin-top: 2rem;
 }
 
+.scholar-link {
+    color: var(--color-subtle);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+}
+
+.scholar-link:hover {
+    color: var(--color-text);
+}
+
+.page-header .impact-metrics {
+    margin-top: 4rem;
+}
+
 /* Blog Styles */
 .blog-posts {
     padding: 4rem 0;

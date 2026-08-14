@@ -1,3 +1,9 @@
 README.md
 .claude/
 .DS_Store
+__pycache__/
+
+# Regenerable FDTD intermediates (keep web texture + slim metadata)
+data/soi-euler-bend-preview.png
+data/soi-euler-bend-field.bin
+data/soi-euler-bend.json

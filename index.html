@@ -45,10 +45,14 @@
             <h1 class="name">Nicholas Harris</h1>
         </section>
 
-        <!-- Physics Simulation -->
+        <!-- Photonic FDTD Simulation -->
         <section class="simulation-section">
-            <canvas id="physics-canvas" class="physics-canvas"></canvas>
-            <p class="simulation-caption">Dipole radiation</p>
+            <div class="physics-stage">
+                <canvas id="physics-canvas" class="physics-canvas" role="img" aria-label="Animated FDTD field threading a dense 49-turn silicon photonic waveguide maze at 1310 nanometers"></canvas>
+                <canvas id="physics-overlay" class="physics-overlay" aria-hidden="true"></canvas>
+            </div>
+            <p class="simulation-caption">1310 nm · SOI waveguide maze (Meep FDTD)</p>
+            <p class="simulation-hint">Click to pause · double-click to restart</p>
         </section>
 
         <!-- Location Section -->

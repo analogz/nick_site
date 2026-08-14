@@ -540,6 +540,7 @@ def run_fdtd(output_dir: Path, resolution: int = RESOLUTION) -> dict:
     web = {
         "title": meta["title"],
         "caption": (
+            "Re{E<sub>z</sub>&thinsp;e<sup>&minus;i&omega;t</sup>} · "
             f"1310 nm · SOI 220 nm · {route.info['turn_count']}-turn waveguide maze "
             f"over {route.info['path_length_um']:.0f} µm · Meep FDTD"
         ),

@@ -30,7 +30,7 @@ let phase = 0;
 let dpr = 1;
 let meta = {
     phase_speed: 2.4,
-    caption: '1310 nm · SOI waveguide maze (Meep FDTD)',
+    caption: 'Re{E<sub>z</sub>&thinsp;e<sup>&minus;i&omega;t</sup>} · 1310 nm · SOI waveguide maze (Meep FDTD)',
     outline: null,
     extent_um: null,
 };
@@ -228,9 +228,9 @@ function frame(now) {
     animationId = requestAnimationFrame(frame);
 }
 
-function setCaption(text) {
+function setCaption(html) {
     const el = document.querySelector('.simulation-caption');
-    if (el) el.textContent = text;
+    if (el) el.innerHTML = html;
 }
 
 function setPaused(next) {

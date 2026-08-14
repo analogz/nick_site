@@ -18,9 +18,13 @@ jobs:
         with:
           python-version: '3.12'
 
-      - run: pip install scholarly
+      # No third-party Scholar client required: the script scrapes the public
+      # profile HTML with a browser User-Agent. scholarly is only an optional
+      # fallback if the scrape is challenged.
+      - run: pip install scholarly || true
 
-      - run: python scripts/update_metrics.py
+      - name: Refresh metrics.json
+        run: python scripts/update_metrics.py
 
       - name: Commit updated metrics
         run: |

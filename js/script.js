@@ -9,6 +9,8 @@ fetch('data/metrics.json')
         set('metric-citations', data.citations.toLocaleString());
         set('metric-hindex',    data.h_index);
         set('metric-i10',       data.i10_index);
+        if (data.publications != null) set('metric-publications', data.publications.toLocaleString());
+        if (data.patents != null) set('metric-patents', data.patents.toLocaleString());
     })
     .catch(() => {});
 

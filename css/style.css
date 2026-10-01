@@ -332,6 +332,17 @@ p {
     text-align: left;
 }
 
+a.impact-metric,
+a.cv-stat {
+    text-decoration: none;
+    color: inherit;
+}
+
+a.impact-metric:hover .impact-label,
+a.cv-stat:hover .cv-stat-label {
+    color: var(--color-text);
+}
+
 .impact-number {
     font-size: clamp(2.5rem, 6vw, 5rem);
     font-weight: 700;

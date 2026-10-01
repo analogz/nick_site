@@ -30,8 +30,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git diff --quiet data/metrics.json || (
-            git add data/metrics.json &&
+          git add data/metrics.json index.html publications.html cv.html
+          git diff --cached --quiet || (
             git commit -m "update citation metrics" &&
             git push
           )

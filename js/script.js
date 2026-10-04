@@ -5,12 +5,14 @@ document.querySelectorAll('.copyright-year').forEach(el => {
 fetch('data/metrics.json')
     .then(r => r.json())
     .then(data => {
-        const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-        set('metric-citations', data.citations.toLocaleString());
-        set('metric-hindex',    data.h_index);
-        set('metric-i10',       data.i10_index);
-        if (data.publications != null) set('metric-publications', data.publications.toLocaleString());
-        if (data.patents != null) set('metric-patents', data.patents.toLocaleString());
+        const set = (key, val) => {
+            document.querySelectorAll(`#metric-${key}, [data-metric="${key}"]`).forEach(el => { el.textContent = val; });
+        };
+        set('citations', data.citations.toLocaleString());
+        set('hindex',    data.h_index);
+        set('i10',       data.i10_index);
+        if (data.publications != null) set('publications', data.publications.toLocaleString());
+        if (data.patents != null) set('patents', data.patents.toLocaleString());
     })
     .catch(() => {});
 

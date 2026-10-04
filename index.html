@@ -26,6 +26,9 @@
 
     <link rel="canonical" href="https://nicholascharris.com/">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Geist:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script type="importmap">
     {
@@ -37,7 +40,7 @@
     </script>
 </head>
 <body>
-    <nav class="main-nav">
+    <nav class="main-nav" id="top">
         <a href="index.html" class="nav-logo">Nicholas Harris</a>
         <div class="nav-links">
             <a href="publications.html">Publications</a>
@@ -48,25 +51,39 @@
     </nav>
 
     <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <h1 class="name">Nicholas Harris</h1>
-        </section>
+        <!-- Hero -->
+        <header class="hero">
+            <h1 class="name">Nicholas<br>Harris</h1>
+            <div class="hero-facts">
+                <span>Founder, President &amp; CEO<br>Lightmatter</span>
+                <span>PhD, Electrical Engineering<br>MIT</span>
+                <span>Optica Fellow<br>2026</span>
+                <span><span data-metric="patents">92</span> patents<br><span data-metric="publications">88</span> publications</span>
+            </div>
+        </header>
 
         <!-- Physics Simulation -->
-        <section class="simulation-section">
-            <canvas id="physics-canvas" class="physics-canvas"></canvas>
-            <p class="simulation-caption">Dipole radiation</p>
-        </section>
-
-        <!-- Location Section -->
-        <section class="location-section">
-            <div class="section-header">
-                <span class="section-number">01</span>
-                <h2>Gasquet, California</h2>
+        <figure class="simulation-section">
+            <div class="physics-stage">
+                <canvas id="physics-canvas" class="physics-canvas" aria-label="Animated electromagnetic field radiated by an oscillating electric dipole"></canvas>
             </div>
-            <div class="location-layout">
-                <p class="location-lede">I grew up in the Redwood Forest.</p>
+            <figcaption class="figure-bar">
+                <span>Fig. 0 — <span id="sim-label">Dipole radiation</span> <span class="figure-hint">· Click to add a source · double-click to reset</span></span>
+                <div class="figure-controls">
+                    <button type="button" class="btn" data-sim="dipole" aria-pressed="true">Dipole</button>
+                    <button type="button" class="btn" data-sim="pair" aria-pressed="false">Two sources</button>
+                    <button type="button" class="btn btn--wide" data-sim="toggle" aria-pressed="false">Pause</button>
+                </div>
+            </figcaption>
+        </figure>
+
+        <!-- 01 Gasquet -->
+        <section class="section section--opener location-section">
+            <div class="section-label"><span>01</span><span>Gasquet, California</span></div>
+            <div class="section-body">
+                <h2 class="statement">I grew up in the Redwood Forest.</h2>
+            </div>
+            <div class="section-full location-layout">
                 <figure class="redwood" data-redwood>
                     <canvas role="img" aria-label="A small cutaway diorama of the redwood forest near Gasquet: towering redwoods fading into fog, sword ferns and huckleberry, a clear green creek spilling over the edge, mossy boulders, a small cabin, and a red dirt trail with a tiny hiker."></canvas>
                 </figure>
@@ -89,94 +106,105 @@
                             <dd>117 m</dd>
                         </div>
                     </dl>
-                    <p class="specimen-hint">Drag to turn. Pinch to zoom.</p>
+                    <p class="specimen-hint">Drag to turn · pinch to zoom</p>
                 </div>
             </div>
         </section>
 
-        <!-- About Section -->
-        <section class="about">
-            <div class="section-header">
-                <span class="section-number">02</span>
-                <h2>The next step is light</h2>
-            </div>
-            <div class="content">
-                <p>My career has been focused on understanding computers—how they work (down to the atomic scale) and where they are headed. During my time at MIT as a PhD student and post-doctoral fellow, I explored what may become the ultimate tool for understanding the exquisite details of our universe: quantum computers. Quantum computing is profoundly exciting, but supporting hardware technologies are not ready yet. I've developed a level of expertise in designing components and systems that create, process, and detect light and what I've been able to build leads me to believe that the next step in the evolution of computing is all about light. I founded Lightmatter with a mission of creating photonic computers and new ways for chips to communicate. We are building machines that will serve as a new engine for human progress.</p>
+        <!-- 02 Light -->
+        <section class="section section--rule about">
+            <div class="section-label"><span>02</span><span>The next step is light</span></div>
+            <div class="section-body">
+                <p class="lede">My career has been focused on understanding computers—how they work (down to the atomic scale) and where they are headed.</p>
+                <div class="columns">
+                    <p>During my time at MIT as a PhD student and post-doctoral fellow, I explored what may become the ultimate tool for understanding the exquisite details of our universe: quantum computers. Quantum computing is profoundly exciting, but supporting hardware technologies are not ready yet.</p>
+                    <p>I've developed a level of expertise in designing components and systems that create, process, and detect light and what I've been able to build leads me to believe that the next step in the evolution of computing is all about light.</p>
+                    <p>I founded Lightmatter with a mission of creating photonic computers and new ways for chips to communicate. We are building machines that will serve as a new engine for human progress.</p>
+                </div>
             </div>
         </section>
 
-        <!-- Heritage Section -->
-        <section class="heritage">
-            <div class="section-header">
-                <span class="section-number">03</span>
-                <h2>Science, art, and design are in my blood.</h2>
+        <!-- 03 Heritage -->
+        <section class="section section--tight inverted heritage">
+            <div class="section-label"><span>03</span><span>Heritage</span></div>
+            <div class="section-body">
+                <h2 class="display display--sm">Science, art, and design are in my blood.</h2>
             </div>
-            <div class="content">
-                <div class="heritage-grid">
-                    <div class="heritage-item">
+            <div class="section-full heritage-grid">
+                <article class="heritage-item">
+                    <div class="heritage-head">
                         <img src="images/heritage/lee-blodget.png" alt="Lee Merritt Blodget, photographer and understudy to Ansel Adams" class="heritage-photo" loading="lazy">
-                        <h3>Lee Merritt Blodget</h3>
-                        <p class="relation">Great-grandfather</p>
-                        <p class="years">1919-1995</p>
-                        <p class="institution">University of California · San Francisco Art Institute</p>
-                        <p>Photographer and understudy to Ansel Adams in Yosemite. Commissioned as an ensign in the U.S. Naval Reserves at the Naval Air Training Center in Corpus Christi, flying WWII aerial reconnaissance. Photography exhibited at Pier 24 and held in MoMA's permanent collection.</p>
+                        <div class="heritage-id">
+                            <h3>Lee Merritt Blodget</h3>
+                            <span class="heritage-meta">Great-grandfather · 1919–1995</span>
+                            <span class="heritage-meta">University of California · San Francisco Art Institute</span>
+                        </div>
                     </div>
+                    <p class="heritage-bio">Photographer and understudy to Ansel Adams in Yosemite. Commissioned as an ensign in the U.S. Naval Reserves at the Naval Air Training Center in Corpus Christi, flying WWII aerial reconnaissance. Photography exhibited at Pier 24 and held in MoMA's permanent collection.</p>
+                </article>
 
-                    <div class="heritage-item">
+                <article class="heritage-item">
+                    <div class="heritage-head">
                         <img src="images/heritage/rene-prestwood.png" alt="Rene Prestwood, Manhattan Project chemist" class="heritage-photo" loading="lazy">
-                        <h3>Rene Prestwood</h3>
-                        <p class="relation">Great-grandpibling</p>
-                        <p class="years">1920-2012</p>
-                        <p class="institution">UC Berkeley</p>
-                        <p>Nuclear chemist recruited from UC Berkeley for the Manhattan Project. Developed the neutron source for the Fat Man implosion bomb. Completed his PhD in nuclear chemistry and spent four decades at Los Alamos National Laboratory, retiring in 1984.</p>
+                        <div class="heritage-id">
+                            <h3>Rene Prestwood</h3>
+                            <span class="heritage-meta">Great-grandpibling · 1920–2012</span>
+                            <span class="heritage-meta">UC Berkeley</span>
+                        </div>
                     </div>
+                    <p class="heritage-bio">Nuclear chemist recruited from UC Berkeley for the Manhattan Project. Developed the neutron source for the Fat Man implosion bomb. Completed his PhD in nuclear chemistry and spent four decades at Los Alamos National Laboratory, retiring in 1984.</p>
+                </article>
 
-                    <div class="heritage-item">
+                <article class="heritage-item">
+                    <div class="heritage-head">
                         <img src="images/heritage/bobby-vilas.jpg" alt="Bobby Vilas, photographer and industrial designer" class="heritage-photo" loading="lazy">
-                        <h3>Bobby Vilas</h3>
-                        <p class="relation">Uncle</p>
-                        <p class="years">&nbsp;</p>
-                        <p class="institution">&nbsp;</p>
-                        <p>Photographer and industrial designer. Travels the world documenting design work. Renovates homes, cars, and motorcycles.</p>
+                        <div class="heritage-id">
+                            <h3>Bobby Vilas</h3>
+                            <span class="heritage-meta">Uncle</span>
+                            <span class="heritage-meta">Photographer · Industrial designer</span>
+                        </div>
                     </div>
-                </div>
+                    <p class="heritage-bio">Photographer and industrial designer. Travels the world documenting design work. Renovates homes, cars, and motorcycles.</p>
+                </article>
             </div>
         </section>
 
-        <!-- Research Section -->
-        <section class="work">
-            <div class="section-header">
-                <span class="section-number">04</span>
-                <h2>Research</h2>
+        <!-- 04 Research -->
+        <section class="section work">
+            <div class="section-label"><span>04</span><span>Google Scholar</span></div>
+            <div class="section-body">
+                <h2 class="display">Research</h2>
+                <p class="page-intro">Silicon photonics, quantum computing, and artificial intelligence. <a href="publications.html">Selected publications →</a></p>
             </div>
-            <div class="content">
-                <div class="impact-metrics">
-                    <div class="impact-metric">
-                        <p class="impact-number" id="metric-citations">11,491</p>
-                        <p class="impact-label">citations</p>
-                    </div>
-                    <div class="impact-metric">
-                        <p class="impact-number" id="metric-hindex">35</p>
-                        <p class="impact-label">h-index</p>
-                    </div>
-                    <div class="impact-metric">
-                        <p class="impact-number" id="metric-i10">60</p>
-                        <p class="impact-label">i10-index</p>
-                    </div>
-                    <a class="impact-metric" href="https://scholar.google.com/citations?user=YBNCZgoAAAAJ" target="_blank" rel="me">
-                        <p class="impact-number" id="metric-patents">92</p>
-                        <p class="impact-label">patents</p>
-                    </a>
+            <dl class="section-full stats">
+                <div class="stat">
+                    <dt>Citations</dt>
+                    <dd id="metric-citations">11,491</dd>
                 </div>
-            </div>
+                <div class="stat">
+                    <dt>h-index</dt>
+                    <dd id="metric-hindex">35</dd>
+                </div>
+                <div class="stat">
+                    <dt>i10-index</dt>
+                    <dd id="metric-i10">60</dd>
+                </div>
+                <div class="stat">
+                    <dt><a href="https://scholar.google.com/citations?user=YBNCZgoAAAAJ" target="_blank" rel="me">Patents ↗</a></dt>
+                    <dd id="metric-patents">92</dd>
+                </div>
+            </dl>
         </section>
 
         <!-- Footer -->
-        <footer>
-            <p>&copy; <span class="copyright-year">2026</span> Nicholas Harris</p>
+        <footer class="site-footer inverted">
             <div class="footer-links">
-                <a href="https://x.com/theanalognick" target="_blank" rel="me">X</a>
-                <a href="https://www.linkedin.com/in/nicholas-harris-7114b233/" target="_blank" rel="me">LinkedIn</a>
+                <a href="https://x.com/theanalognick" target="_blank" rel="me">X ↗</a>
+                <a href="https://www.linkedin.com/in/nicholas-harris-7114b233/" target="_blank" rel="me">LinkedIn ↗</a>
+            </div>
+            <div class="footer-bar">
+                <span>&copy; <span class="copyright-year">2026</span> Nicholas Harris</span>
+                <a href="#top">Back to top ↑</a>
             </div>
         </footer>
     </main>

@@ -3,14 +3,18 @@
 
 const canvas = document.getElementById('physics-canvas');
 const ctx = canvas.getContext('2d');
+const label = document.getElementById('sim-label');
+const buttons = Array.from(document.querySelectorAll('[data-sim]'));
 
 let width, height, dpr;
-let animationId;
+let animationId = null;
 let time = 0;
+let playing = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let onScreen = true;
 
 const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
 let isDark = darkQuery.matches;
-darkQuery.addEventListener('change', (e) => { isDark = e.matches; });
+darkQuery.addEventListener('change', (e) => { isDark = e.matches; if (!playing) drawField(); });
 
 const dipoles = [];
 
@@ -46,8 +50,9 @@ class Dipole {
 
 function initSimulation() {
     resizeCanvas();
-    createInitialDipoles();
-    animate();
+    setPreset('dipole');
+    syncPlayButton();
+    if (playing) start(); else drawField();
 }
 
 function resizeCanvas() {
@@ -55,18 +60,44 @@ function resizeCanvas() {
     const rect = canvas.getBoundingClientRect();
     width = rect.width;
     height = rect.height;
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
+    canvas.width = Math.max(1, Math.round(width * dpr));
+    canvas.height = Math.max(1, Math.round(height * dpr));
 }
 
-function createInitialDipoles() {
+function setPreset(name) {
     dipoles.length = 0;
-    dipoles.push(new Dipole(width / 2, height / 2, 0.05, 1.0));
+    time = 0;
+    if (name === 'pair') {
+        const sep = Math.min(width, height) * 0.22;
+        dipoles.push(new Dipole(width / 2 - sep, height / 2, 0.05, 1.0));
+        dipoles.push(new Dipole(width / 2 + sep, height / 2, 0.05, 1.0));
+        if (label) label.textContent = 'Two-source interference';
+    } else {
+        dipoles.push(new Dipole(width / 2, height / 2, 0.05, 1.0));
+        if (label) label.textContent = 'Dipole radiation';
+    }
+    markPreset(name);
+    if (!playing) drawField();
+}
+
+function markPreset(name) {
+    buttons.forEach((b) => {
+        if (b.dataset.sim === 'dipole' || b.dataset.sim === 'pair') {
+            b.setAttribute('aria-pressed', String(b.dataset.sim === name));
+        }
+    });
+}
+
+function syncPlayButton() {
+    const toggle = buttons.find((b) => b.dataset.sim === 'toggle');
+    if (!toggle) return;
+    toggle.textContent = playing ? 'Pause' : 'Play';
+    toggle.setAttribute('aria-pressed', String(!playing));
 }
 
 function drawField() {
-    const w = Math.ceil(width * dpr);
-    const h = Math.ceil(height * dpr);
+    const w = canvas.width;
+    const h = canvas.height;
     const imageData = ctx.createImageData(w, h);
     const data = imageData.data;
 
@@ -108,10 +139,34 @@ function drawField() {
 }
 
 function animate() {
+    animationId = requestAnimationFrame(animate);
+    if (!onScreen || document.hidden) return;
     drawField();
     time += 0.5;
-    animationId = requestAnimationFrame(animate);
 }
+
+function start() {
+    if (animationId === null) animate();
+}
+
+function stop() {
+    if (animationId !== null) cancelAnimationFrame(animationId);
+    animationId = null;
+}
+
+function setPlaying(next) {
+    playing = next;
+    syncPlayButton();
+    if (playing) start(); else stop();
+}
+
+buttons.forEach((b) => {
+    b.addEventListener('click', () => {
+        const action = b.dataset.sim;
+        if (action === 'toggle') setPlaying(!playing);
+        else setPreset(action);
+    });
+});
 
 // Click to add dipole
 canvas.addEventListener('click', (e) => {
@@ -125,19 +180,28 @@ canvas.addEventListener('click', (e) => {
     if (dipoles.length > 6) {
         dipoles.shift();
     }
+    markPreset(null);
+    if (label) label.textContent = dipoles.length === 1 ? 'Dipole radiation' : `${dipoles.length} sources`;
+    if (!playing) drawField();
 });
 
 // Double-click to reset
 canvas.addEventListener('dblclick', (e) => {
     e.preventDefault();
-    createInitialDipoles();
-    time = 0;
+    setPreset('dipole');
 });
 
 // Handle resize
 window.addEventListener('resize', () => {
+    const wasPair = buttons.some((b) => b.dataset.sim === 'pair' && b.getAttribute('aria-pressed') === 'true');
     resizeCanvas();
-    createInitialDipoles();
+    setPreset(wasPair ? 'pair' : 'dipole');
 });
+
+if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+        onScreen = entries[entries.length - 1].isIntersecting;
+    }).observe(canvas);
+}
 
 initSimulation();

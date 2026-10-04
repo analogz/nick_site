@@ -23,10 +23,13 @@
 
     <link rel="canonical" href="https://nicholascharris.com/cv.html">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Geist:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <nav class="main-nav">
+    <nav class="main-nav" id="top">
         <a href="index.html" class="nav-logo">Nicholas Harris</a>
         <div class="nav-links">
             <a href="publications.html">Publications</a>
@@ -37,165 +40,149 @@
     </nav>
 
     <main>
-        <section class="page-header">
-            <h1>Curriculum Vitae</h1>
+        <section class="section">
+            <div class="section-label"><span>01</span><span>Curriculum vitae</span></div>
+            <div class="section-body">
+                <h1 class="display">CV</h1>
+                <p class="page-intro">Founder of Lightmatter. MIT PhD in integrated photonics and quantum computing. Optica Fellow.</p>
+            </div>
         </section>
 
-        <section class="cv-section">
-            <h2 class="cv-section-title">Experience</h2>
+        <div class="cv-grid">
+            <div class="cv-column">
+                <h2 class="cv-section-title">Experience</h2>
 
-            <div class="cv-item">
-                <div class="cv-header">
+                <div class="cv-item">
                     <h3>Lightmatter</h3>
-                    <span class="cv-date">Sep 2017 - Present</span>
+                    <span class="cv-role">Founder, President, CEO</span>
+                    <span class="cv-date">Sep 2017 – Present</span>
+                    <p class="cv-description">Raised over $850M from investors including Sequoia and Google Ventures.</p>
                 </div>
-                <p class="cv-role">Founder, President, CEO</p>
-                <p class="cv-description">Raised over $850M from investors including Sequoia and Google Ventures</p>
-            </div>
 
-            <div class="cv-item">
-                <div class="cv-header">
+                <div class="cv-item">
                     <h3>MIT</h3>
-                    <span class="cv-date">Sep 2017 - Jan 2018</span>
+                    <span class="cv-role">Intelligence Community Postdoctoral Fellow</span>
+                    <span class="cv-date">Sep 2017 – Jan 2018</span>
                 </div>
-                <p class="cv-role">Intelligence Community Postdoctoral Fellow</p>
-            </div>
 
-            <div class="cv-item">
-                <div class="cv-header">
+                <div class="cv-item">
                     <h3>Micron</h3>
-                    <span class="cv-date">Jan 2009 - Jun 2011</span>
+                    <span class="cv-role">R&amp;D Product Engineer</span>
+                    <span class="cv-date">Jan 2009 – Jun 2011</span>
                 </div>
-                <p class="cv-role">R&D Product Engineer</p>
-            </div>
-        </section>
 
-        <section class="cv-section">
-            <h2 class="cv-section-title">Education</h2>
+                <h2 class="cv-section-title">Education</h2>
 
-            <div class="cv-item">
-                <div class="cv-header">
-                    <h3>PhD, Electrical Engineering</h3>
-                    <span class="cv-date">Jul 2013 - Sep 2017</span>
+                <div class="cv-item">
+                    <h3>MIT</h3>
+                    <span class="cv-role">PhD, Electrical Engineering</span>
+                    <span class="cv-date">Jul 2013 – Sep 2017</span>
                 </div>
-                <p class="cv-institution">MIT</p>
-            </div>
 
-            <div class="cv-item">
-                <div class="cv-header">
-                    <h3>BSc, Electrical Engineering</h3>
-                    <span class="cv-date">Sep 2005 - May 2009</span>
+                <div class="cv-item">
+                    <h3>University of Idaho</h3>
+                    <span class="cv-role">BSc, Electrical Engineering</span>
+                    <span class="cv-date">Sep 2005 – May 2009</span>
                 </div>
-                <p class="cv-institution">University of Idaho</p>
-            </div>
-        </section>
-
-        <section class="cv-section">
-            <h2 class="cv-section-title">Recognition</h2>
-
-            <div class="cv-award">
-                <p class="cv-award-title">Fellow of the Optical Society of America</p>
-                <span class="cv-year">2026</span>
             </div>
 
-            <div class="cv-award">
-                <p class="cv-award-title">Goldman Sachs Most Exceptional Entrepreneurs</p>
-                <span class="cv-year">2025</span>
+            <div class="cv-column">
+                <h2 class="cv-section-title">Recognition</h2>
+
+                <div class="cv-award">
+                    <span class="cv-award-title">Fellow of the Optical Society of America</span>
+                    <span class="cv-year">2026</span>
+                </div>
+                <div class="cv-award">
+                    <span class="cv-award-title">Goldman Sachs Most Exceptional Entrepreneurs</span>
+                    <span class="cv-year">2025</span>
+                </div>
+                <div class="cv-award">
+                    <span class="cv-award-title">Boston Globe's Tech Power Players 50</span>
+                    <span class="cv-year">2024</span>
+                </div>
+                <div class="cv-award">
+                    <span class="cv-award-title">Photonics100</span>
+                    <span class="cv-year">2022</span>
+                </div>
+                <div class="cv-award">
+                    <span class="cv-award-title">MIT Technology Review 35 Innovators Under 35</span>
+                    <span class="cv-year">2021</span>
+                </div>
+                <div class="cv-award">
+                    <span class="cv-award-title">MIT $100K Entrepreneurship Competition</span>
+                    <span class="cv-year">2017</span>
+                </div>
+                <div class="cv-award">
+                    <span class="cv-award-title">Harvard President's Innovation Challenge</span>
+                    <span class="cv-year">2017</span>
+                </div>
+                <div class="cv-award">
+                    <span class="cv-award-title">National Science Foundation Graduate Research Fellowship</span>
+                    <span class="cv-year">2012</span>
+                </div>
+
+                <h2 class="cv-section-title">Research</h2>
+
+                <p class="cv-highlight">Pioneered research in quantum and classical information processing with integrated photonics.</p>
+
+                <dl class="stats stats--compact">
+                    <div class="stat">
+                        <dt><a href="https://scholar.google.com/citations?user=YBNCZgoAAAAJ" target="_blank" rel="me">Patents ↗</a></dt>
+                        <dd id="metric-patents">92</dd>
+                    </div>
+                    <div class="stat">
+                        <dt><a href="https://scholar.google.com/citations?user=YBNCZgoAAAAJ" target="_blank" rel="me">Publications ↗</a></dt>
+                        <dd id="metric-publications">88</dd>
+                    </div>
+                </dl>
             </div>
 
-            <div class="cv-award">
-                <p class="cv-award-title">Boston Globe's Tech Power Players 50</p>
-                <span class="cv-year">2024</span>
+            <div class="cv-column">
+                <h2 class="cv-section-title">Select publications</h2>
+
+                <div class="cv-pub-item"><span class="cv-pub-journal">Nature</span><span class="cv-pub-cite">640, 368–374 (2025)</span></div>
+                <div class="cv-pub-item"><span class="cv-pub-journal">Nature Photonics</span><span class="cv-pub-cite">19, 911–912 (2025)</span></div>
+                <div class="cv-pub-item"><span class="cv-pub-journal">Nature Photonics</span><span class="cv-pub-cite">18, 1335–1343 (2024)</span></div>
+                <div class="cv-pub-item"><span class="cv-pub-journal">Nature</span><span class="cv-pub-cite">591, 229–233 (2021)</span></div>
+                <div class="cv-pub-item"><span class="cv-pub-journal">Nature Physics</span><span class="cv-pub-cite">16, 322–327 (2020)</span></div>
+                <div class="cv-pub-item"><span class="cv-pub-journal">Nature Photonics</span><span class="cv-pub-cite">11, 447–452 (2017)</span></div>
+                <div class="cv-pub-item"><span class="cv-pub-journal">Nature Photonics</span><span class="cv-pub-cite">11, 441–446 (2017)</span></div>
+                <div class="cv-pub-item"><span class="cv-pub-journal">Nature Comms.</span><span class="cv-pub-cite">6, 5873 (2015)</span></div>
+                <div class="cv-pub-item"><span class="cv-pub-journal">Phys. Rev. X</span><span class="cv-pub-cite">4, 041047 (2014)</span></div>
+
+                <h2 class="cv-section-title">Select patents</h2>
+
+                <div class="cv-patents">
+                    <span class="cv-patent">US10,158,481</span>
+                    <span class="cv-patent">US10,268,232</span>
+                    <span class="cv-patent">US10,359,272</span>
+                    <span class="cv-patent">US10,608,663</span>
+                    <span class="cv-patent">US10,619,993</span>
+                    <span class="cv-patent">US10,740,693</span>
+                    <span class="cv-patent">US10,763,974</span>
+                    <span class="cv-patent">US10,768,659</span>
+                    <span class="cv-patent">US9,354,039</span>
+                    <span class="cv-patent">US16/411,391</span>
+                    <span class="cv-patent">US16/653,159</span>
+                    <span class="cv-patent">US16/671,726</span>
+                    <span class="cv-patent">US16/680,908</span>
+                    <span class="cv-patent">US16/810,573</span>
+                    <span class="cv-patent">US16/915,023</span>
+                    <span class="cv-patent">US16/986,383</span>
+                    <span class="cv-patent">US16/986,655</span>
+                </div>
             </div>
+        </div>
 
-            <div class="cv-award">
-                <p class="cv-award-title">Photonics100</p>
-                <span class="cv-year">2022</span>
-            </div>
-
-            <div class="cv-award">
-                <p class="cv-award-title">MIT Technology Review 35 Innovators Under 35</p>
-                <span class="cv-year">2021</span>
-            </div>
-
-            <div class="cv-award">
-                <p class="cv-award-title">MIT $100K Entrepreneurship Competition</p>
-                <span class="cv-year">2017</span>
-            </div>
-
-            <div class="cv-award">
-                <p class="cv-award-title">Harvard President's Innovation Challenge</p>
-                <span class="cv-year">2017</span>
-            </div>
-
-            <div class="cv-award">
-                <p class="cv-award-title">National Science Foundation Graduate Research Fellowship</p>
-                <span class="cv-year">2012</span>
-            </div>
-        </section>
-
-        <section class="cv-section">
-            <h2 class="cv-section-title">Research</h2>
-
-            <div class="cv-stats">
-                <a class="cv-stat" href="https://scholar.google.com/citations?user=YBNCZgoAAAAJ" target="_blank" rel="me">
-                    <p class="cv-stat-number" id="metric-patents">92</p>
-                    <p class="cv-stat-label">Patents</p>
-                </a>
-                <a class="cv-stat" href="https://scholar.google.com/citations?user=YBNCZgoAAAAJ" target="_blank" rel="me">
-                    <p class="cv-stat-number" id="metric-publications">88</p>
-                    <p class="cv-stat-label">Publications</p>
-                </a>
-            </div>
-
-            <p class="cv-highlight">Pioneered research in quantum and classical information processing with integrated photonics</p>
-        </section>
-
-        <section class="cv-section">
-            <h2 class="cv-section-title">Select Publications</h2>
-
-            <div class="cv-publications">
-                <p class="cv-pub-item"><strong>Nature</strong> vol. 640, pgs. 368–374 (2025)</p>
-                <p class="cv-pub-item"><strong>Nature Photonics</strong> vol. 19, pgs. 911–912 (2025)</p>
-                <p class="cv-pub-item"><strong>Nature Photonics</strong> vol. 18, pgs. 1335–1343 (2024)</p>
-                <p class="cv-pub-item"><strong>Nature</strong> vol. 591, pgs. 229-233 (2021)</p>
-                <p class="cv-pub-item"><strong>Nature Physics</strong> vol. 16, pgs. 322–327 (2020)</p>
-                <p class="cv-pub-item"><strong>Nature Photonics</strong> vol. 11, pgs. 447–452 (2017)</p>
-                <p class="cv-pub-item"><strong>Nature Photonics</strong> vol. 11, pgs. 441–446 (2017)</p>
-                <p class="cv-pub-item"><strong>Nature Comms.</strong> vol. 6, no. 5873 (2015)</p>
-                <p class="cv-pub-item"><strong>Phys. Rev. X</strong> 4, 041047 (2014)</p>
-            </div>
-        </section>
-
-        <section class="cv-section">
-            <h2 class="cv-section-title">Select Patents</h2>
-
-            <div class="cv-patents">
-                <span class="cv-patent">US10,158,481</span>
-                <span class="cv-patent">US10,268,232</span>
-                <span class="cv-patent">US10,359,272</span>
-                <span class="cv-patent">US10,608,663</span>
-                <span class="cv-patent">US10,619,993</span>
-                <span class="cv-patent">US10,740,693</span>
-                <span class="cv-patent">US10,763,974</span>
-                <span class="cv-patent">US10,768,659</span>
-                <span class="cv-patent">US9,354,039</span>
-                <span class="cv-patent">US16/411,391</span>
-                <span class="cv-patent">US16/653,159</span>
-                <span class="cv-patent">US16/671,726</span>
-                <span class="cv-patent">US16/680,908</span>
-                <span class="cv-patent">US16/810,573</span>
-                <span class="cv-patent">US16/915,023</span>
-                <span class="cv-patent">US16/986,383</span>
-                <span class="cv-patent">US16/986,655</span>
-            </div>
-        </section>
-
-        <footer>
-            <p>&copy; <span class="copyright-year">2026</span> Nicholas Harris</p>
+        <footer class="site-footer inverted">
             <div class="footer-links">
-                <a href="https://x.com/theanalognick" target="_blank" rel="me">X</a>
-                <a href="https://www.linkedin.com/in/nicholas-harris-7114b233/" target="_blank" rel="me">LinkedIn</a>
+                <a href="https://x.com/theanalognick" target="_blank" rel="me">X ↗</a>
+                <a href="https://www.linkedin.com/in/nicholas-harris-7114b233/" target="_blank" rel="me">LinkedIn ↗</a>
+            </div>
+            <div class="footer-bar">
+                <span>&copy; <span class="copyright-year">2026</span> Nicholas Harris</span>
+                <a href="#top">Back to top ↑</a>
             </div>
         </footer>
     </main>

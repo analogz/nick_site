@@ -13,8 +13,19 @@ let playing = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let onScreen = true;
 
 const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
-let isDark = darkQuery.matches;
-darkQuery.addEventListener('change', (e) => { isDark = e.matches; if (!playing) drawField(); });
+function readDark() {
+    const choice = document.documentElement.dataset.theme;
+    if (choice === 'dark') return true;
+    if (choice === 'light') return false;
+    return darkQuery.matches;
+}
+let isDark = readDark();
+function onTheme() {
+    isDark = readDark();
+    if (!playing) drawField();
+}
+darkQuery.addEventListener('change', onTheme);
+window.addEventListener('themechange', onTheme);
 
 const dipoles = [];
 

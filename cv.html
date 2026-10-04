@@ -26,6 +26,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Geist:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+    try {
+        var theme = localStorage.getItem('theme');
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+    } catch (e) {}
+    </script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -36,6 +42,7 @@
             <a href="cv.html" class="active">CV</a>
             <a href="speaking.html">Speaking</a>
             <a href="gallery.html">Gallery</a>
+            <button type="button" class="theme-toggle" id="theme-toggle">Dark</button>
         </div>
     </nav>
 

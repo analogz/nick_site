@@ -31,11 +31,29 @@
     --color-surface: var(--bg);
 }
 
+:root {
+    color-scheme: light;
+}
+
+/* System preference, unless the visitor has chosen the other way. */
 @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
         --paper: #000000;
         --black: #ffffff;
+        color-scheme: dark;
     }
+}
+
+:root[data-theme="dark"] {
+    --paper: #000000;
+    --black: #ffffff;
+    color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+    --paper: #ffffff;
+    --black: #000000;
+    color-scheme: light;
 }
 
 .inverted {
@@ -137,6 +155,24 @@ p {
 }
 
 .nav-links a.active {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+}
+
+.theme-toggle {
+    font: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin-left: clamp(8px, 1.5vw, 24px);
+    color: inherit;
+    cursor: pointer;
+}
+
+.theme-toggle:hover {
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.18em;
@@ -309,7 +345,7 @@ p {
 }
 
 .button {
-    display: inline-flex;
+    display: inline-block;
     padding: 18px 28px;
     background: var(--ink);
     color: var(--bg);

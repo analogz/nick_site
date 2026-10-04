@@ -1,3 +1,40 @@
+const themeToggle = document.getElementById('theme-toggle');
+const themeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+function themeIsDark() {
+    const choice = document.documentElement.dataset.theme;
+    if (choice === 'dark') return true;
+    if (choice === 'light') return false;
+    return themeQuery.matches;
+}
+
+function syncThemeToggle() {
+    if (!themeToggle) return;
+    const dark = themeIsDark();
+    themeToggle.textContent = dark ? 'Light' : 'Dark';
+    themeToggle.setAttribute('aria-pressed', String(dark));
+    themeToggle.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+}
+
+syncThemeToggle();
+
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        const next = themeIsDark() ? 'light' : 'dark';
+        try { localStorage.setItem('theme', next); } catch (e) {}
+        document.documentElement.dataset.theme = next;
+        syncThemeToggle();
+        window.dispatchEvent(new Event('themechange'));
+    });
+}
+
+themeQuery.addEventListener('change', () => {
+    if (!document.documentElement.dataset.theme) {
+        syncThemeToggle();
+        window.dispatchEvent(new Event('themechange'));
+    }
+});
+
 document.querySelectorAll('.copyright-year').forEach(el => {
     el.textContent = new Date().getFullYear();
 });

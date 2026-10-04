@@ -154,26 +154,32 @@ main {
     text-align: center;
 }
 
-/* Redwood Cutaway */
-.redwood-figure {
-    margin-top: 6rem;
+/* Gasquet: redwood cutaway */
+.location-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "lede figure"
+        "specimen figure";
+    column-gap: 4rem;
+    margin-left: 5rem;
+}
+
+.location-lede {
+    grid-area: lede;
+    margin: 0;
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
 }
 
 .redwood {
+    grid-area: figure;
     position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    border: 1px solid var(--color-line);
-    background: radial-gradient(120% 100% at 50% 22%, #eef0ea 0%, #dfe3dc 45%, #b5c0b2 100%);
-}
-
-.redwood::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: radial-gradient(ellipse at center, transparent 55%, rgba(40, 52, 42, 0.16) 100%);
+    aspect-ratio: 1 / 1.08;
+    margin-top: -7rem;
 }
 
 .redwood canvas {
@@ -183,6 +189,8 @@ main {
     cursor: grab;
     opacity: 0;
     transition: opacity 0.8s ease;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 22%);
+    mask-image: linear-gradient(to bottom, transparent, #000 22%);
 }
 
 .redwood canvas:active {
@@ -193,31 +201,76 @@ main {
     opacity: 1;
 }
 
-.redwood-hint,
 .redwood-error {
     position: absolute;
-    margin: 0;
-    font-size: 0.75rem;
-    letter-spacing: 0.04em;
-    color: rgba(27, 36, 30, 0.5);
-    pointer-events: none;
-    z-index: 1;
-}
-
-.redwood-hint {
-    right: 1rem;
-    bottom: 0.8rem;
-}
-
-.redwood-error {
     inset: 0;
     display: grid;
     place-items: center;
+    margin: 0;
     font-size: 0.875rem;
+    color: var(--color-subtle);
 }
 
-.redwood.has-error .redwood-hint {
+.specimen {
+    grid-area: specimen;
+    align-self: end;
+    padding-bottom: 2.5rem;
+}
+
+.specimen dl {
+    border-top: 1px solid var(--color-line);
+}
+
+.specimen dl > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--color-line);
+}
+
+.specimen dt {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-subtle);
+}
+
+.specimen dd {
+    font-size: 0.875rem;
+    text-align: right;
+}
+
+.specimen-hint {
+    margin: 1.25rem 0 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    color: var(--color-subtle);
+}
+
+.redwood.has-error ~ .specimen .specimen-hint {
     display: none;
+}
+
+@media (max-width: 960px) {
+    .location-layout {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto;
+        grid-template-areas:
+            "lede"
+            "figure"
+            "specimen";
+        margin-left: 0;
+    }
+
+    .redwood {
+        margin: 1.5rem -1.5rem 0;
+    }
+
+    .specimen {
+        padding-bottom: 0;
+    }
 }
 
 /* Section Styles */
@@ -994,20 +1047,6 @@ footer p {
 
     .simulation-section {
         padding: 5rem 0 8rem 0;
-    }
-
-    .redwood-figure {
-        margin-top: 3rem;
-    }
-
-    .redwood {
-        aspect-ratio: 1 / 1;
-    }
-
-    .redwood-hint {
-        left: 0;
-        right: 0;
-        text-align: center;
     }
 
     footer {

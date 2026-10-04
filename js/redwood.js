@@ -129,7 +129,7 @@ function main(host) {
     renderer.localClippingEnabled = true;
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(FOG_COLOR, 0.0085);
+    scene.fog = new THREE.FogExp2(FOG_COLOR, 0.006);
 
     initRiver();
     CABIN.padH = hillOnly(CABIN.x, CABIN.z) - 0.08;
@@ -137,19 +137,43 @@ function main(host) {
     PATH = placePath();
 
     const camera = new THREE.PerspectiveCamera(30, 1.6, 0.1, 240);
-    camera.position.set(44, 13, 41);
+    camera.position.set(41.9, 26.6, 39.1);
+    const fill = parseFloat(host.dataset.fill) || 0.94;
+    let homeView = null;
+    // Treetops dissolve into the mist (and the host's CSS mask), so the frame stops a little short of the tallest crown.
+    const framePoints = [];
+    for (const sx of [-1, 1]) {
+        for (const sz of [-1, 1]) {
+            framePoints.push(new THREE.Vector3(sx * (W / 2 + PLINTH_M) * 1.15, BASE - PLINTH_H, sz * (D / 2 + PLINTH_M) * 1.15));
+            framePoints.push(new THREE.Vector3(sx * W / 2, 18.5, sz * D / 2));
+        }
+    }
+    const viewBounds = (view) => {
+        const b = { x0: Infinity, x1: -Infinity, y0: Infinity, y1: -Infinity };
+        const p = new THREE.Vector3();
+        for (const q of framePoints) {
+            p.copy(q).applyMatrix4(view.matrixWorldInverse);
+            const x = p.x / -p.z;
+            const y = p.y / -p.z;
+            b.x0 = Math.min(b.x0, x);
+            b.x1 = Math.max(b.x1, x);
+            b.y0 = Math.min(b.y0, y);
+            b.y1 = Math.max(b.y1, y);
+        }
+        return b;
+    };
     const fitCamera = () => {
         const w = Math.max(1, host.clientWidth);
         const h = Math.max(1, host.clientHeight);
         camera.aspect = w / h;
-        // The view is composed at 16:10; narrower frames widen the lens so the whole block stays in shot.
-        camera.fov = camera.aspect >= 1.6
-            ? 30
-            : THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(15)) * 1.6 / camera.aspect));
+        const b = viewBounds(homeView);
+        const tx = Math.max(-b.x0, b.x1);
+        const ty = Math.max(-b.y0, b.y1);
+        const t = Math.max(ty, tx / camera.aspect) / fill;
+        camera.fov = THREE.MathUtils.radToDeg(2 * Math.atan(t));
         camera.updateProjectionMatrix();
         renderer.setSize(w, h, false);
     };
-    fitCamera();
 
     const controls = new OrbitControls(camera, canvas);
     controls.target.set(0, 7.6, 0);
@@ -161,6 +185,19 @@ function main(host) {
     controls.minPolarAngle = 0.42;
     controls.maxPolarAngle = 1.25;
     controls.update();
+    // Slide the orbit pivot onto the diorama's visual center so the frame has no dead band below the plinth.
+    for (let i = 0; i < 3; i++) {
+        camera.updateMatrixWorld();
+        const b = viewBounds(camera);
+        const depth = camera.position.distanceTo(controls.target);
+        const shift = new THREE.Vector3((b.x0 + b.x1) / 2 * depth, (b.y0 + b.y1) / 2 * depth, 0).applyQuaternion(camera.quaternion);
+        camera.position.add(shift);
+        controls.target.add(shift);
+    }
+    controls.update();
+    homeView = camera.clone();
+    homeView.updateMatrixWorld();
+    fitCamera();
 
     if (!freeZoom) {
         // Embedded in a scrolling page: plain wheel scrolls the page, pinch or Ctrl/Cmd + wheel zooms.
@@ -193,7 +230,18 @@ function main(host) {
     scene.add(buildCabin());
     scene.add(buildShrubs(rocks));
     scene.add(buildShafts());
-    scene.add(buildMist());
+    const mist = buildMist();
+    scene.add(mist);
+
+    const matchPage = () => {
+        const color = pageColor(host);
+        scene.fog.color.copy(color);
+        mist.traverse((obj) => {
+            if (obj.isSprite) obj.material.color.copy(color);
+        });
+    };
+    matchPage();
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', matchPage);
     scene.add(buildMotes(renderer));
 
     if ('ResizeObserver' in window) new ResizeObserver(fitCamera).observe(host);
@@ -206,8 +254,7 @@ function main(host) {
     });
     if ('IntersectionObserver' in window) {
         new IntersectionObserver((entries) => {
-            onScreen = entries[entries.length - 1].isIntersecting;
-        }).observe(host);
+            onScreen = entries[entries.length - 1].isIntersecting;        }).observe(host);
     }
 
     host.classList.add('is-ready');
@@ -217,8 +264,7 @@ function main(host) {
         for (const uniform of timeUniforms) uniform.value = t;
         for (const update of updaters) update(t);
         controls.update();
-        renderer.render(scene, camera);
-    });
+        renderer.render(scene, camera);    });
 }
 
 function addLights(scene) {
@@ -762,7 +808,7 @@ function buildPlinth() {
     plate.position.set(-6.6, BASE - PLINTH_H / 2, D / 2 + PLINTH_M + 0.006);
 
     const shadow = new THREE.Mesh(
-        new THREE.PlaneGeometry(pw * 1.45, pd * 1.75),
+        new THREE.PlaneGeometry(pw * 1.25, pd * 1.25),
         new THREE.MeshBasicMaterial({ map: blobTexture(), transparent: true, depthWrite: false, fog: false })
     );
     shadow.rotation.x = -Math.PI / 2;
@@ -2415,6 +2461,17 @@ function mulberry32(seed) {
         t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
         return ((t ^ t >>> 14) >>> 0) / 4294967296;
     };
+}
+
+function pageColor(el) {
+    for (let node = el; node; node = node.parentElement) {
+        const bg = getComputedStyle(node).backgroundColor;
+        const alpha = bg.match(/rgba\([^)]*,\s*([\d.]+)\)/);
+        if (bg && bg !== 'transparent' && !(alpha && parseFloat(alpha[1]) === 0)) {
+            return new THREE.Color().setStyle(bg.replace(/rgba\(([^,]+),([^,]+),([^,]+),[^)]*\)/, 'rgb($1,$2,$3)'));
+        }
+    }
+    return new THREE.Color(FOG_COLOR);
 }
 
 function showError(target, err) {

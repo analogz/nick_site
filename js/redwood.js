@@ -242,7 +242,6 @@ function main(host) {
     };
     matchPage();
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', matchPage);
-    window.addEventListener('themechange', matchPage);
     scene.add(buildMotes(renderer));
 
     if ('ResizeObserver' in window) new ResizeObserver(fitCamera).observe(host);

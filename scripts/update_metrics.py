@@ -182,12 +182,12 @@ def write_fallbacks(publications: int, patents: int) -> None:
     for path in HTML_FILES:
         text = path.read_text()
         updated = re.sub(
-            r'((?:id="metric-publications"|data-metric="publications")>)\d[\d,]*',
+            r'(id="metric-publications">)\d[\d,]*',
             rf"\g<1>{publications}",
             text,
         )
         updated = re.sub(
-            r'((?:id="metric-patents"|data-metric="patents")>)\d[\d,]*\+?',
+            r'(id="metric-patents">)\d[\d,]*\+?',
             rf"\g<1>{patents}",
             updated,
         )

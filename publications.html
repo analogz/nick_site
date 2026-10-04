@@ -23,166 +23,139 @@
 
     <link rel="canonical" href="https://nicholascharris.com/publications.html">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Geist:wght@400;500&display=swap" rel="stylesheet">
-    <script>
-    try {
-        var theme = localStorage.getItem('theme');
-        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
-    } catch (e) {}
-    </script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <nav class="main-nav" id="top">
+    <nav class="main-nav">
         <a href="index.html" class="nav-logo">Nicholas Harris</a>
         <div class="nav-links">
             <a href="publications.html" class="active">Publications</a>
             <a href="cv.html">CV</a>
             <a href="speaking.html">Speaking</a>
             <a href="gallery.html">Gallery</a>
-            <button type="button" class="theme-toggle" id="theme-toggle">Dark</button>
         </div>
     </nav>
 
     <main>
-        <section class="section">
-            <div class="section-label"><span>01</span><span>Research</span></div>
-            <div class="section-body">
-                <h1 class="display">Publications</h1>
-                <p class="page-intro">Selected work connecting silicon photonics, quantum computing, and artificial intelligence.</p>
+        <section class="page-header">
+            <h1>Publications</h1>
+            <p class="page-intro">Selected work connecting silicon photonics, quantum computing, and artificial intelligence.</p>
+            <a href="https://scholar.google.com/citations?user=YBNCZgoAAAAJ" target="_blank" rel="me" class="scholar-link">View all <span id="metric-publications">88</span> on Google Scholar →</a>
+            <div class="impact-metrics">
+                <div class="impact-metric">
+                    <p class="impact-number" id="metric-citations">11,491</p>
+                    <p class="impact-label">citations</p>
+                </div>
+                <div class="impact-metric">
+                    <p class="impact-number" id="metric-hindex">35</p>
+                    <p class="impact-label">h-index</p>
+                </div>
+                <div class="impact-metric">
+                    <p class="impact-number" id="metric-i10">60</p>
+                    <p class="impact-label">i10-index</p>
+                </div>
+                <a class="impact-metric" href="https://scholar.google.com/citations?user=YBNCZgoAAAAJ" target="_blank" rel="me">
+                    <p class="impact-number" id="metric-patents">92</p>
+                    <p class="impact-label">patents</p>
+                </a>
             </div>
         </section>
 
         <section class="publications-list">
-            <dl class="stats">
-                <div class="stat">
-                    <dt>Citations</dt>
-                    <dd id="metric-citations">11,491</dd>
-                </div>
-                <div class="stat">
-                    <dt>h-index</dt>
-                    <dd id="metric-hindex">35</dd>
-                </div>
-                <div class="stat">
-                    <dt>i10-index</dt>
-                    <dd id="metric-i10">60</dd>
-                </div>
-                <div class="stat">
-                    <dt><a href="https://scholar.google.com/citations?user=YBNCZgoAAAAJ" target="_blank" rel="me">Patents ↗</a></dt>
-                    <dd id="metric-patents">92</dd>
-                </div>
-            </dl>
             <article class="publication">
-                <span class="pub-index">01</span>
-                <a class="pub-figure" href="https://www.nature.com/articles/s41586-025-08854-x" target="_blank" rel="noopener">
+                <div class="pub-figure">
                     <img src="images/publications/nature-2025.png" alt="Figure 1: Universal photonic artificial intelligence acceleration" loading="lazy">
-                </a>
+                </div>
                 <div class="pub-content">
-                    <span class="pub-meta">Nature 640, 368–374 (2025)</span>
-                    <h3 class="pub-title"><a href="https://www.nature.com/articles/s41586-025-08854-x" target="_blank" rel="noopener">Universal photonic artificial intelligence acceleration</a></h3>
+                    <h3 class="pub-title"><a href="https://www.nature.com/articles/s41586-025-08854-x" target="_blank">Universal photonic artificial intelligence acceleration</a></h3>
+                    <p class="pub-meta">Nature 640, 368–374 (2025)</p>
                     <p class="pub-abstract">Demonstrated a photonic processor running advanced AI models (ResNet, BERT, Atari deep reinforcement learning) with near-electronic precision. Marks a substantial step towards post-transistor computing technologies.</p>
                 </div>
             </article>
 
             <article class="publication">
-                <span class="pub-index">02</span>
-                <a class="pub-figure" href="https://www.nature.com/articles/s41566-024-01567-z" target="_blank" rel="noopener">
+                <div class="pub-figure">
                     <img src="images/publications/nature-photonics-2024.png" alt="Figure 1: Single-chip photonic deep neural network with forward-only training" loading="lazy">
-                </a>
+                </div>
                 <div class="pub-content">
-                    <span class="pub-meta">Nature Photonics 18, 1335–1343 (2024)</span>
-                    <h3 class="pub-title"><a href="https://www.nature.com/articles/s41566-024-01567-z" target="_blank" rel="noopener">Single-chip photonic deep neural network with forward-only training</a></h3>
+                    <h3 class="pub-title"><a href="https://www.nature.com/articles/s41566-024-01567-z" target="_blank">Single-chip photonic deep neural network with forward-only training</a></h3>
+                    <p class="pub-meta">Nature Photonics 18, 1335–1343 (2024)</p>
                     <p class="pub-abstract">Demonstrated a fully integrated photonic deep neural network on a single chip with forward-only training, achieving 92.5% accuracy on classification tasks with 410 ps latency. Opens path to nanosecond inference at femtojoule-scale energy efficiency.</p>
                 </div>
             </article>
 
             <article class="publication">
-                <span class="pub-index">03</span>
-                <a class="pub-figure" href="https://www.nature.com/articles/s41586-021-03242-7" target="_blank" rel="noopener">
+                <div class="pub-figure">
                     <img src="images/publications/nature-2021.png" alt="Figure 1: Experimental quantum speed-up in reinforcement learning agents" loading="lazy">
-                </a>
+                </div>
                 <div class="pub-content">
-                    <span class="pub-meta">Nature 591, 229–233 (2021)</span>
-                    <h3 class="pub-title"><a href="https://www.nature.com/articles/s41586-021-03242-7" target="_blank" rel="noopener">Experimental quantum speed-up in reinforcement learning agents</a></h3>
+                    <h3 class="pub-title"><a href="https://www.nature.com/articles/s41586-021-03242-7" target="_blank">Experimental quantum speed-up in reinforcement learning agents</a></h3>
+                    <p class="pub-meta">Nature 591, 229-233 (2021)</p>
                     <p class="pub-abstract">Experimentally demonstrated quantum speed-up in reinforcement learning using an integrated nanophotonic processor. Shows systematic quantum advantage for learning agents with fast active feedback.</p>
                 </div>
             </article>
 
             <article class="publication">
-                <span class="pub-index">04</span>
-                <a class="pub-figure" href="https://www.nature.com/articles/s41567-019-0747-6" target="_blank" rel="noopener">
+                <div class="pub-figure">
                     <img src="images/publications/nature-physics-2020.png" alt="Figure 1: Variational quantum unsampling on a quantum photonic processor" loading="lazy">
-                </a>
+                </div>
                 <div class="pub-content">
-                    <span class="pub-meta">Nature Physics 16, 322–327 (2020)</span>
-                    <h3 class="pub-title"><a href="https://www.nature.com/articles/s41567-019-0747-6" target="_blank" rel="noopener">Variational quantum unsampling on a quantum photonic processor</a></h3>
+                    <h3 class="pub-title"><a href="https://www.nature.com/articles/s41567-019-0747-6" target="_blank">Variational quantum unsampling on a quantum photonic processor</a></h3>
+                    <p class="pub-meta">Nature Physics 16, 322–327 (2020)</p>
                     <p class="pub-abstract">Introduced variational quantum unsampling, a quantum neural network approach for verification and inference of quantum circuits. Applications include quantum measurement, tomography, sensing, and ansatz validation.</p>
                 </div>
             </article>
 
             <article class="publication">
-                <span class="pub-index">05</span>
-                <a class="pub-figure" href="https://www.nature.com/articles/nphoton.2017.95" target="_blank" rel="noopener">
+                <div class="pub-figure">
                     <img src="images/publications/nature-photonics-2017b.jpg" alt="Figure 1: Quantum transport simulations in a programmable nanophotonic processor" loading="lazy">
-                </a>
+                </div>
                 <div class="pub-content">
-                    <span class="pub-meta">Nature Photonics 11, 447–452 (2017)</span>
-                    <h3 class="pub-title"><a href="https://www.nature.com/articles/nphoton.2017.95" target="_blank" rel="noopener">Quantum transport simulations in a programmable nanophotonic processor</a></h3>
+                    <h3 class="pub-title"><a href="https://www.nature.com/articles/nphoton.2017.95" target="_blank">Quantum transport simulations in a programmable nanophotonic processor</a></h3>
+                    <p class="pub-meta">Nature Photonics 11, 447–452 (2017)</p>
                     <p class="pub-abstract">Mapped quantum transport regimes using a programmable 88-beamsplitter nanophotonic processor. Over 64,400 experiments revealed environment-assisted transport and the quantum Goldilocks regime.</p>
                 </div>
             </article>
 
             <article class="publication">
-                <span class="pub-index">06</span>
-                <a class="pub-figure" href="https://www.nature.com/articles/nphoton.2017.93" target="_blank" rel="noopener">
+                <div class="pub-figure">
                     <img src="images/publications/nature-photonics-2017a.jpg" alt="Figure 1: Deep learning with coherent nanophotonic circuits" loading="lazy">
-                </a>
+                </div>
                 <div class="pub-content">
-                    <span class="pub-meta">Nature Photonics 11, 441–446 (2017)</span>
-                    <h3 class="pub-title"><a href="https://www.nature.com/articles/nphoton.2017.93" target="_blank" rel="noopener">Deep learning with coherent nanophotonic circuits</a></h3>
+                    <h3 class="pub-title"><a href="https://www.nature.com/articles/nphoton.2017.93" target="_blank">Deep learning with coherent nanophotonic circuits</a></h3>
+                    <p class="pub-meta">Nature Photonics 11, 441–446 (2017)</p>
                     <p class="pub-abstract">Demonstrated optical neural network architecture using 56 programmable Mach-Zehnder interferometers on a silicon chip. Achieved vowel recognition with potential for enhanced speed and power efficiency over electronics.</p>
                 </div>
             </article>
 
             <article class="publication">
-                <span class="pub-index">07</span>
-                <a class="pub-figure" href="https://www.nature.com/articles/ncomms6873" target="_blank" rel="noopener">
+                <div class="pub-figure">
                     <img src="images/publications/nature-comms-2015.jpg" alt="Figure 1: On-chip detection of non-classical light by scalable integration of single-photon detectors" loading="lazy">
-                </a>
+                </div>
                 <div class="pub-content">
-                    <span class="pub-meta">Nature Communications 6, 5873 (2015)</span>
-                    <h3 class="pub-title"><a href="https://www.nature.com/articles/ncomms6873" target="_blank" rel="noopener">On-chip detection of non-classical light by scalable integration of single-photon detectors</a></h3>
+                    <h3 class="pub-title"><a href="https://www.nature.com/articles/ncomms6873" target="_blank">On-chip detection of non-classical light by scalable integration of single-photon detectors</a></h3>
+                    <p class="pub-meta">Nature Communications 6, 5873 (2015)</p>
                     <p class="pub-abstract">Developed scalable flip-chip integration of superconducting single-photon detectors on photonic circuits. Achieved first on-chip quantum correlation measurements with 100% device yield.</p>
                 </div>
             </article>
 
             <article class="publication">
-                <span class="pub-index">08</span>
-                <a class="pub-figure" href="https://journals.aps.org/prx/abstract/10.1103/PhysRevX.4.041047" target="_blank" rel="noopener">
+                <div class="pub-figure">
                     <img src="images/publications/prx-2014.jpg" alt="Figure 1: Integrated Source of Spectrally Filtered Correlated Photons for Large-Scale Quantum Photonic Systems" loading="lazy">
-                </a>
+                </div>
                 <div class="pub-content">
-                    <span class="pub-meta">Physical Review X 4, 041047 (2014)</span>
-                    <h3 class="pub-title"><a href="https://journals.aps.org/prx/abstract/10.1103/PhysRevX.4.041047" target="_blank" rel="noopener">Integrated Source of Spectrally Filtered Correlated Photons for Large-Scale Quantum Photonic Systems</a></h3>
+                    <h3 class="pub-title"><a href="https://journals.aps.org/prx/abstract/10.1103/PhysRevX.4.041047" target="_blank">Integrated Source of Spectrally Filtered Correlated Photons for Large-Scale Quantum Photonic Systems</a></h3>
+                    <p class="pub-meta">Physical Review X 4, 041047 (2014)</p>
                     <p class="pub-abstract">Generated and routed quantum-correlated photon pairs on silicon with 95 dB pump filtering. CMOS-compatible fabrication enables integration of sources and detectors on the same chip for large-scale quantum circuits.</p>
                 </div>
             </article>
-
-            <div class="pub-more">
-                <a class="button" href="https://scholar.google.com/citations?user=YBNCZgoAAAAJ" target="_blank" rel="me">View all <span id="metric-publications">88</span> on Google Scholar →</a>
-            </div>
         </section>
 
-        <footer class="site-footer inverted">
+        <footer>
+            <p>&copy; <span class="copyright-year">2026</span> Nicholas Harris</p>
             <div class="footer-links">
-                <a href="https://x.com/theanalognick" target="_blank" rel="me">X ↗</a>
-                <a href="https://www.linkedin.com/in/nicholas-harris-7114b233/" target="_blank" rel="me">LinkedIn ↗</a>
-            </div>
-            <div class="footer-bar">
-                <span>&copy; <span class="copyright-year">2026</span> Nicholas Harris</span>
-                <a href="#top">Back to top ↑</a>
+                <a href="https://x.com/theanalognick" target="_blank" rel="me">X</a>
+                <a href="https://www.linkedin.com/in/nicholas-harris-7114b233/" target="_blank" rel="me">LinkedIn</a>
             </div>
         </footer>
     </main>

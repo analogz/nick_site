@@ -22,6 +22,11 @@
     --gap: clamp(24px, 4vw, 64px);
     --section-pad: clamp(64px, 8vw, 128px);
 
+    --fs-display: clamp(40px, 6vw, 104px);
+    --fs-display-sm: clamp(32px, 4vw, 64px);
+    --fs-statement: clamp(44px, 7.4vw, 136px);
+    --fs-lede: clamp(28px, 3.2vw, 52px);
+
     /* Legacy aliases used by older markup / scripts */
     --color-bg: var(--bg);
     --color-text: var(--ink);
@@ -302,6 +307,26 @@ p {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    /* Line the label's cap height up with the heading's cap height.
+       Geist caps sit (lh - 1.3) / 2 + 0.295 em below the line box;
+       DM Mono caps at 13px / 1.5 sit 0.39em below theirs. */
+    padding-top: max(0px, calc(var(--cap-offset, 0px) - 0.39em));
+}
+
+.section:has(> .section-body > .display:first-child) {
+    --cap-offset: calc(var(--fs-display) * 0.115);
+}
+
+.section:has(> .section-body > .display--sm:first-child) {
+    --cap-offset: calc(var(--fs-display-sm) * 0.135);
+}
+
+.section:has(> .section-body > .statement:first-child) {
+    --cap-offset: calc(var(--fs-statement) * 0.105);
+}
+
+.section:has(> .section-body > .lede:first-child) {
+    --cap-offset: calc(var(--fs-lede) * 0.185);
 }
 
 .section-body {
@@ -316,13 +341,13 @@ p {
 
 .display {
     font-weight: 500;
-    font-size: clamp(40px, 6vw, 104px);
+    font-size: var(--fs-display);
     line-height: 0.94;
     letter-spacing: -0.05em;
 }
 
 .display--sm {
-    font-size: clamp(32px, 4vw, 64px);
+    font-size: var(--fs-display-sm);
     line-height: 0.98;
     letter-spacing: -0.045em;
     text-wrap: balance;
@@ -330,7 +355,7 @@ p {
 
 .statement {
     font-weight: 500;
-    font-size: clamp(44px, 7.4vw, 136px);
+    font-size: var(--fs-statement);
     line-height: 0.92;
     letter-spacing: -0.05em;
     text-wrap: balance;
@@ -446,7 +471,7 @@ p {
    The next step is light
    --------------------------------------------------------------- */
 .lede {
-    font-size: clamp(28px, 3.2vw, 52px);
+    font-size: var(--fs-lede);
     line-height: 1.08;
     letter-spacing: -0.03em;
     text-wrap: pretty;

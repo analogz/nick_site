@@ -13,8 +13,8 @@
     --color-line: #e5e5e5;
     --color-surface: #fafafa;
 
-    --font-display: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Arial', sans-serif;
-    --font-body: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Arial', sans-serif;
+    --font-display: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    --font-body: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
 
     --spacing-unit: 1rem;
     --max-width: 1200px;

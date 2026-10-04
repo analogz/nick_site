@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redwood cutaway</title>
+    <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(120% 100% at 50% 22%, #eef0ea 0%, #dfe3dc 45%, #b5c0b2 100%);
+        }
+
+        .stage {
+            position: fixed;
+            inset: 0;
+        }
+
+        .stage canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            touch-action: none;
+        }
+
+        .vignette {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse at center, transparent 55%, rgba(40, 52, 42, 0.16) 100%);
+        }
+
+        .caption {
+            position: fixed;
+            left: 1.4rem;
+            bottom: 1.15rem;
+            color: rgba(27, 36, 30, 0.78);
+            pointer-events: none;
+        }
+
+        .caption h1 {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .caption p {
+            margin: 0.22rem 0 0;
+            font-size: 0.8rem;
+            letter-spacing: 0.02em;
+            color: rgba(27, 36, 30, 0.52);
+        }
+
+        .hint {
+            position: fixed;
+            right: 1.4rem;
+            bottom: 1.2rem;
+            margin: 0;
+            font-size: 0.75rem;
+            letter-spacing: 0.04em;
+            color: rgba(27, 36, 30, 0.45);
+            pointer-events: none;
+        }
+
+        .redwood-error {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            margin: 0;
+            font-size: 0.9rem;
+            color: rgba(27, 36, 30, 0.6);
+        }
+    </style>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+<body>
+    <div class="stage" data-redwood data-free-zoom>
+        <canvas role="img" aria-label="A small cutaway diorama of a Northern California redwood forest: a block of ground with exposed soil layers, towering redwoods fading into fog, sword ferns and huckleberry, a clear green creek spilling over the edge, mossy boulders, a small cabin, and a red dirt trail with a tiny hiker."></canvas>
+    </div>
+    <div class="vignette"></div>
+    <div class="caption">
+        <h1>Redwood cutaway</h1>
+        <p>Gasquet, California</p>
+    </div>
+    <p class="hint">Drag to look around · scroll to zoom</p>
+    <script type="module" src="js/redwood.js"></script>
+</body>
+</html>
